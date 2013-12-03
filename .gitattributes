@@ -1,1 +1,7 @@
 * text=auto !eol
+/cDatabase.php -text
+/cModel.php -text
+/cMysql.php -text
+/mquery.php -text
+nbproject/project.properties -text
+nbproject/project.xml -text
