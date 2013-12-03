@@ -1,0 +1,11 @@
+{
+    "table": "sample",
+    "columns":
+            {
+                "id": "5",
+                "user_name": "User",
+                "first_name": "username",
+                "last_name": "lastname"
+            },
+    "action": "c"
+}

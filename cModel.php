@@ -29,6 +29,7 @@ class cModel extends cDatabase {
     public $exclude_columns = "";
     public $returning;
     public $debug = false;
+    public $lastsql = "";
 
     public function __construct() {
         parent::__construct();
@@ -39,30 +40,16 @@ class cModel extends cDatabase {
      */
     function resetQuery() {
         if ($this->debug) {
-            echo $this->query;
+            $this->lastsql = $this->query;
         }
         unset($this->column, $this->parent_only, $this->table, $this->join_condition, $this->condition, $this->group_by, $this->having, $this->order_by, $this->limit, $this->offset_by, $this->sub_query, $this->exclude_columns);
     }
 
     public function create() {
-        $foreignkeycolumns = $this->dbObj->getForeignKeyDetails($this->table);
-        if (@is_array($foreignkeycolumns['columns'])) {
-            foreach ($this->column as $columnname => $value) {
-                if (array_key_exists($this->column[$columnname], $foreignkeycolumns['columns'])) {
-                    $this->column[$columnname] = $this->column[$columnname] ? $this->column[$columnname] : "NULL";
-                }
-            }
-        }
+
         $this->query = "INSERT INTO " . $this->table;
-        $columnNames = '';
-
-        foreach ($this->column as $columnName => $columnValue) {
-
-            if ($columnValue != '' || $columnValue !== NULL) {
-                $columnNames[$columnName] = $columnValue;
-            }
-        }
-        $this->query.= ( $columnNames) ? " (`" . implode('`,`', array_keys($columnNames)) . "`) VALUES ('" . implode("','", array_values($columnNames)) . "')" : "";
+        $this->column = is_object($this->column) ? (array) $this->column : $this->column;
+        $this->query.= ( $this->column) ? " (`" . implode('`,`', array_keys($this->column)) . "`) VALUES ('" . implode("','", array_values($this->column)) . "')" : "";
         $this->query.= ( $this->returning) ? " RETURNING " . $this->returning : "";
         $this->query.= ( $this->sub_query) ? $this->sub_query : "";
         $this->query.=";";
@@ -106,14 +93,8 @@ class cModel extends cDatabase {
     }
 
     public function update() {
-        $columnNames = '';
-        foreach ($this->column as $columnName => $columnValue) {
-
-            if ($columnValue != '' || $columnValue !== NULL) {
-                $columnNames[] = $columnName . " = '" . $columnValue . "'";
-            }
-        }
-        $this->query = "UPDATE " . $this->parent_only . " " . $this->table . " SET " . implode(",", $columnNames) . "" . $this->condition;
+        $this->column = is_object($this->column) ? (array) $this->column : $this->column;
+        $this->query = "UPDATE " . $this->parent_only . " " . $this->table . " SET " . implode(",", $this->column) . "" . $this->condition;
 
         $this->resetQuery();
         return $this;
@@ -177,31 +158,13 @@ class cModel extends cDatabase {
     function executeRead() {
         $this->dbObj->sql = $this->query;
         $this->debug = false;
-        $result = $this->dbObj->read();
-        if ($result === false) {
-            $_SESSION['lastaction']['error'] = $this->dbObj->error;
-            //log_message('error', $this->dbObj->error, FALSE);
-            if (AppEnvironment == 'Development') {
-                echo $_SESSION['lastaction']['error'];
-                exit;
-            }
-        }
         return $this->dbObj->read();
     }
 
     function executeWrite() {
         $this->dbObj->sql = $this->query;
         $this->debug = false;
-        $result = $this->dbObj->write();
-        if ($result === false) {
-            $_SESSION['lastaction']['error'] = $this->dbObj->error;
-            //log_message('error', $this->dbObj->error, FALSE);
-            if (AppEnvironment == 'Development') {
-                echo $_SESSION['lastaction']['error'];
-                exit;
-            }
-        }
-        return $result;
+        return $this->dbObj->write();
     }
 
     function getColumnDetails($table) {

@@ -10,8 +10,6 @@
  *
  * @author gt
  */
-
-
 class cMysql {
 
     private $connection;
@@ -156,9 +154,7 @@ class cMysql {
                     $columnDetails[$value['COLUMN_NAME']]['CONSTRAINT_NAME'] = $columnForeignDetailsArray[0]['CONSTRAINT_NAME'];
                     $columnDetails[$value['COLUMN_NAME']]['referencetabledetails'] = $referenceColumnDetails;
                 }
-                $columnDetails[$value['COLUMN_NAME']]["AI"]=$value['extra']=='auto_increment'?true:false;
-                
-                
+                $columnDetails[$value['COLUMN_NAME']]["AI"] = $value['extra'] == 'auto_increment' ? true : false;
             }
 
             //log_message("info", "getColumnDetails -- " . $table . ": " . json_encode($columnDetails));
@@ -179,8 +175,8 @@ class cMysql {
         return $childTableDetails;
     }
 
-    function getTableDetails($columns="",$condition="") {
-       $this->sql = "SELECT TABLE_NAME,TABLE_TYPE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME $columns from information_schema.TABLES where  TABLE_SCHEMA='" . DataBaseName . "' $condition order by TABLE_NAME;";
+    function getTableDetails($columns = "", $condition = "") {
+        $this->sql = "SELECT TABLE_NAME,TABLE_TYPE,TABLE_ROWS,AUTO_INCREMENT,CREATE_TIME $columns from information_schema.TABLES where  TABLE_SCHEMA='" . DataBaseName . "' $condition order by TABLE_NAME;";
         return $this->read();
     }
 
@@ -195,6 +191,7 @@ class cMysql {
 
         return $ForeignKeyDetailsArray;
     }
+
 }
 
 ?>
