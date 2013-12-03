@@ -3,7 +3,7 @@
 /**
  * Database
  */
-define('DataBaseName', 'sample');
+define('DataBaseName', 'megam');
 define('DataBasePort', '3306');
 define('DataBaseHost', 'localhost');
 define('DataBaseUser', 'root');
@@ -47,11 +47,12 @@ $cModel = new cModel();
 //$cModel->addWhereCondition("id=1")->delete()->executeWrite();
 //Switch case
 
-$data = json_decode($_POST['data']);
+$data = json_decode(rawurldecode($_POST['data']));
 
 $cModel->table = $data->table;
 $cModel->column = $data->columns;
 $result['data'] = "";
+$cModel->debug = $data->debug;
 switch ($data->action) {
     case 'c':
         $result['data'] = $cModel->create()->executeWrite();
@@ -59,7 +60,7 @@ switch ($data->action) {
 
         break;
     case 'u':
-        $result['data'] = $cModel->addWhereCondition($data['condition'])->update()->executeWrite();
+        $result['data'] = $cModel->addWhereCondition($data->condition)->addHaving($data->having)->update()->executeWrite();
 
 
         break;
@@ -69,7 +70,7 @@ switch ($data->action) {
 
         break;
     case 'd':
-        $result['data'] = $cModel->addWhereCondition($data['condition'])->addHaving($data['having'])->delete()->executeWrite();
+        $result['data'] = $cModel->addWhereCondition($data->condition)->addHaving($data->having)->delete()->executeWrite();
 
 
         break;
@@ -79,5 +80,9 @@ switch ($data->action) {
 
         break;
 }
+if ($data->debug) {
+    $result['sql'] = rawurlencode($cModel->lastsql);
+}
+
 echo json_encode($result);
 ?>
