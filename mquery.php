@@ -69,7 +69,7 @@ switch ($data->action) {
         $cDatabase->dbObj->update();
         break;
     case 'r':
-        $cDatabase->dbObj->select();
+        $cDatabase->dbObj->read();
         break;
     case 'd':
         $cDatabase->dbObj->delete();
