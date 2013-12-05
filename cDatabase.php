@@ -13,13 +13,18 @@
 Class cDatabase {
 
     public $dbObj;
+    public $dbType;
 
-    public function __construct($DataBaseType = "") {
+    public function __construct() {
         if (!$this->dbObj) {
-            $this->dbType = $DataBaseType ? $DataBaseType : DataBaseType;
-            $databasetypename = 'c' . ucfirst($this->dbType);
-            include_once($databasetypename . '.php');
-            $this->dbObj = new $databasetypename();
+            if ($this->dbType != 'mongodb') {
+
+                include 'cSql.php';
+                $this->dbObj = new cSql($this->dbType);
+            } else {
+                include 'cNoSql.php';
+                $this->dbObj = new cNoSql($this->dbType);
+            }
         }
     }
 

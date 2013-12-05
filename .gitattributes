@@ -2,6 +2,8 @@
 /cDatabase.php -text
 /cModel.php -text
 /cMysql.php -text
+/cNoSql.php -text
+/cSql.php -text
 /mQuery.php -text
 /mquery.php -text
 nbproject/project.properties -text

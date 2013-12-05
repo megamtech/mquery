@@ -11,9 +11,9 @@ define('DataBasePass', '');
 define('DataBaseType', 'mysql');
 
 
-include_once('cModel.php');
+include_once('cDatabase.php');
 
-$cModel = new cModel();
+$cDatabase = new cDatabase();
 /**
  * CURD
  */
@@ -49,39 +49,38 @@ $cModel = new cModel();
 
 $data = json_decode(rawurldecode($_POST['data']));
 
-$cModel->table = $data->table;
-$cModel->column = $data->columns;
+$cDatabase->dbObj->table = $data->table;
+$cDatabase->dbObj->column = $data->columns;
 $result['data'] = "";
-$cModel->debug = $data->debug;
+$cDatabase->dbObj->debug = $data->debug;
+$cDatabase->dbType = DataBaseType;
+$cDatabase->dbObj->condition = $data->condition;
+$cDatabase->dbObj->groupby = $data->groupby;
+$cDatabase->dbObj->having = $data->having;
+$cDatabase->dbObj->orderby = $data->orderby;
+$cDatabase->dbObj->limit = $data->limit;
+$cDatabase->dbObj->offset = $data->offset;
+
 switch ($data->action) {
     case 'c':
-        $result['data'] = $cModel->create()->executeWrite();
-
-
+        $cDatabase->dbObj->create();
         break;
     case 'u':
-        $result['data'] = $cModel->addWhereCondition($data->condition)->addHaving($data->having)->update()->executeWrite();
-
-
+        $cDatabase->dbObj->update();
         break;
     case 'r':
-        $cModel->debug = true;
-        $result['data'] = $cModel->addWhereCondition($data->condition)->addGroupBy($data->groupby)->addHaving($data->having)->addOrderBy($data->orderby)->addLimit($data->limit)->addOffsetBy($data->offset)->select()->executeRead();
-
+        $cDatabase->dbObj->select();
         break;
     case 'd':
-        $result['data'] = $cModel->addWhereCondition($data->condition)->addHaving($data->having)->delete()->executeWrite();
-
-
+        $cDatabase->dbObj->delete();
         break;
-
     default:
         $result['error'] = "Its not a Valid Action";
-
         break;
 }
+$result['data'] = $cDatabase->dbObj->result;
 if ($data->debug) {
-    $result['sql'] = rawurlencode($cModel->lastsql);
+    $result['sql'] = rawurlencode($cDatabase->dbObj->lastsql);
 }
 
 echo json_encode($result);
