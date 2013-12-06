@@ -1,6 +1,7 @@
 * text=auto !eol
 /cDatabase.php -text
 /cModel.php -text
+/cMongo.php -text
 /cMysql.php -text
 /cNoSql.php -text
 /cSql.php -text

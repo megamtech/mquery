@@ -11,32 +11,20 @@
  *
  * @author Admin
  */
-class cNoSql implements cModel {
+
+class cNoSql {
 
     public $dbType;
     public $dbObj;
+    public $table;
+    public $column;
+
 
     public function __construct($dbType) {
         $this->dbType = $dbType;
         $databasetypename = 'c' . ucfirst($this->dbType);
         include_once($databasetypename . '.php');
         $this->dbObj = new $databasetypename();
-    }
-
-    public function create() {
-
-    }
-
-    public function delete() {
-
-    }
-
-    public function read() {
-
-    }
-
-    public function update() {
-
     }
 
 }

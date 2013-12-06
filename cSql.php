@@ -10,7 +10,7 @@
  *
  * @author gt
  */
-class cSql implements cModel {
+class cSql {
 
     public $column; //what columns to be queried or set or deleted
     public $parent_only; //whether to restrict the query to only one table
