@@ -12,13 +12,17 @@ include 'cModel.php';
 class cMongo implements cModel {
 
     public $connection;
-    //collection
+//collection
     public $table;
-    //fields
+//fields
     public $column;
-    //DB
+    public $orderby;
+    public $limit;
+    public $offset;
+//DB
     public $db;
     public $result;
+    private $cursor;
 
     public function __construct() {
         $this->getConnection();
@@ -32,22 +36,44 @@ class cMongo implements cModel {
     }
 
     public function create() {
-        $this->db->{$this->table}->insert($this->column);
+        $this->result = $this->db->{$this->table}->insert($this->column);
     }
 
     public function delete() {
-        $this->db->{$this->table}->remove($this->condition, $justone);
+        $this->result = $this->db->{$this->table}->remove($this->condition);
     }
 
     public function read() {
-        $this->db->{$this->table}->find($this->condition, array('$set'=>$this->column),array('multiple'=>true))->sort($this->orderby)->limit($this->limit)->skip($this->offset);
+        $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
+        $this->addOrderby();
+        $this->addLimit();
+        $this->addOffset();
+        foreach ($this->cursor as $doc) {
+            $this->result[] = $doc;
+        }
     }
 
     public function update() {
-        $this->db->{$this->table}->update($this->condition, $this->column);
-        $this->result = "";
+        $this->result = $this->db->{$this->table}->update($this->condition, $this->column);
+    }
+
+    private function addOrderby() {
+        if ($this->orderby) {
+            $this->cursor->sort($this->orderby);
+        }
+    }
+
+    private function addLimit() {
+        if ($this->limit) {
+            $this->cursor->limit($this->limit);
+        }
+    }
+
+    private function addOffset() {
+        if ($this->offset) {
+            $this->cursor->skip($this->offset);
+        }
     }
 
 }
-
 ?>

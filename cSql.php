@@ -1,16 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of cModal
+ * @copyright (c) 2013, Megam Technologies LLP
  *
  * @author gt
  */
-class cSql {
+class cSql implements cModel {
 
     public $column; //what columns to be queried or set or deleted
     public $parent_only; //whether to restrict the query to only one table
@@ -38,9 +33,6 @@ class cSql {
         $this->dbObj = new $databasetypename();
     }
 
-    /**
-     * @assert ($this->query) == ""
-     */
     function resetQuery() {
         if ($this->debug) {
             $this->lastsql = $this->query;
@@ -48,6 +40,9 @@ class cSql {
         unset($this->column, $this->parent_only, $this->table, $this->join_condition, $this->condition, $this->group_by, $this->having, $this->order_by, $this->limit, $this->offset_by, $this->sub_query, $this->exclude_columns);
     }
 
+    /**
+     * @return type Description
+     */
     public function create() {
 
         $this->query = "INSERT INTO " . $this->table;

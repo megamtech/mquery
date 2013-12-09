@@ -14,7 +14,6 @@ define('DataBaseType', 'mongo');
 
 
 include_once('cDatabase.php');
-
 $cDatabase = new cDatabase(DataBaseType);
 
 $data = json_decode(rawurldecode($_POST['data']));
