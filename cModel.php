@@ -10,7 +10,8 @@
  *
  * @author Admin
  */
-interface cModel {
+interface cModel
+{
 
     public function create();
 
@@ -19,4 +20,6 @@ interface cModel {
     public function read();
 
     public function delete();
+
+    public function addWhereCondition($condition);
 }

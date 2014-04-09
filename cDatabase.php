@@ -10,24 +10,37 @@
  *
  * @author gt
  */
-Class cDatabase {
+Class cDatabase
+{
 
     public $dbObj;
     public $dbType;
 
-    public function __construct($dbType) {
-        echo $this->dbType=$dbType;
+    public function __construct($newDatabaseInfo = array())
+    {
+
         if (!$this->dbObj) {
 
+            if ($newDatabaseInfo['type'] == '') {
+                $this->dbType = DataBaseType;
+                $newDatabaseInfo['type'] = DataBaseType;
+                $newDatabaseInfo['host'] = DataBaseHost;
+                $newDatabaseInfo['port'] = DataBasePort;
+                $newDatabaseInfo['user'] = DataBaseUser;
+                $newDatabaseInfo['pass'] = DataBasePass;
+                $newDatabaseInfo['name'] = DataBaseName;
+            }
             if ($this->dbType != 'mongo') {
 
                 include 'cSql.php';
-                $this->dbObj = new cSql($this->dbType);
+
+                $this->dbObj = new cSql($newDatabaseInfo);
             } else {
                 include 'cNoSql.php';
-                $nosql=new cNoSql($this->dbType);
-                $this->dbObj =$nosql->dbObj ;
+
+                $this->dbObj = new cNoSql($newDatabaseInfo);
             }
+            $this->dbObj->dbType = $this->dbType;
         }
     }
 
