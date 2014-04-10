@@ -14,7 +14,8 @@
  *
  *
  */
-class cMongo {
+class cMongo
+{
 
     public $connection;
     //collection
@@ -34,28 +35,34 @@ class cMongo {
      *
      * @var Mixed
      */
-    public function __construct($newDatabaseInfo) {
+    public function __construct($newDatabaseInfo)
+    {
         $this->getConnection($newDatabaseInfo);
     }
 
-    public function getConnection($newDatabaseInfo) {
+    public function getConnection($newDatabaseInfo)
+    {
         if (!$this->db) {
             $this->connection = new MongoClient('mongodb://' . $newDatabaseInfo['host'] . ':' . $newDatabaseInfo['port']);
             $this->db = $this->connection->{$newDatabaseInfo['name']};
         }
     }
 
-    public function create() {
+    public function create()
+    {
+
+        $this->column['_id'] = $this->getNextSequence();
         $this->db->{$this->table}->insert($this->column);
+        return $this->column['_id'];
     }
 
-    public function delete() {
-        $this->db->{$this->table}->remove($this->condition);
+    public function delete()
+    {
+        return $this->db->{$this->table}->remove($this->condition);
     }
 
-    public function read() {
-        //      echo $this->table;
-//        print_r($this->db->{$this->table});
+    public function read()
+    {
         $this->column = is_array($this->column) ? $this->column : array();
         $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
@@ -73,17 +80,24 @@ class cMongo {
         }
 
         return $this->result;
-        //return ->find($this->condition, $this->column)->sort($this->orderby)->limit($this->limit)->skip($this->offset);
     }
 
-    public function update() {
-        $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
-        $this->result = "";
+    public function update()
+    {
+        return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
     }
 
-    public function addWhereCondition($condition) {
+    public function addWhereCondition($condition)
+    {
         $this->condition = is_array($condition) ? $condition : array();
         return $this;
+    }
+
+    private function getNextSequence()
+    {
+
+        $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
+        return $result['seq'];
     }
 
 }
