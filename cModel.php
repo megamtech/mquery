@@ -10,8 +10,7 @@
  *
  * @author Admin
  */
-interface cModel
-{
+interface cModel {
 
     public function create();
 
@@ -20,6 +19,12 @@ interface cModel
     public function read();
 
     public function delete();
+
+    public function addOrderBy($orderby);
+
+    public function addLimit($limit);
+
+    public function addOffset($offset);
 
     public function addWhereCondition($condition);
 }

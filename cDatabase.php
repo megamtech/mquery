@@ -10,14 +10,17 @@
  *
  * @author gt
  */
-Class cDatabase
-{
+include 'cModel.php';
+
+Class cDatabase implements cModel {
 
     public $dbObj;
     public $dbType;
+    public $table;
+    public $join_condition;
+    public $column;
 
-    public function __construct($newDatabaseInfo = array())
-    {
+    public function __construct($newDatabaseInfo = array()) {
 
         if (!$this->dbObj) {
 
@@ -42,6 +45,44 @@ Class cDatabase
             }
             $this->dbObj->dbType = $this->dbType;
         }
+    }
+
+    public function create() {
+        $this->dbObj->create();
+    }
+
+    public function update() {
+        $this->dbObj->update();
+    }
+
+    public function read() {
+        $this->dbObj->table;
+        $this->dbObj->join_condition = $this->join_condition;
+        $this->column = $this->column;
+        $this->dbObj->read();
+    }
+
+    public function delete() {
+        $this->dbObj->delete();
+    }
+
+    public function addOrderBy($orderby) {
+        $this->dbObj->addOrderBy($orderby);
+        return $this;
+    }
+
+    public function addLimit($limit) {
+        $this->dbObj->addOffset($offset);
+    }
+
+    public function addOffset($offset) {
+        $this->dbObj->addOffset($offset);
+    }
+
+    public function addWhereCondition($condition) {
+
+        $this->dbObj->addWhereCondition($condition);
+        return $this;
     }
 
 }

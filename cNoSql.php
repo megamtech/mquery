@@ -11,47 +11,51 @@
  *
  * @author Admin
  */
-include 'cModel.php';
-
-class cNoSql implements cModel
-{
+class cNoSql {
 
     public $dbType;
     public $dbObj;
     public $table;
     public $column;
 
-    public function __construct($newDatabaseInfo)
-    {
+    public function __construct($newDatabaseInfo) {
         $this->dbType = $newDatabaseInfo['type'];
         $databasetypename = 'c' . ucfirst($this->dbType);
         include_once($databasetypename . '.php');
         $this->dbObj = new $databasetypename($newDatabaseInfo);
     }
 
-    function read()
-    {
+    function read() {
         return $this->dbObj->read();
     }
 
-    function create()
-    {
+    function create() {
         return $this->dbObj->create();
     }
 
-    function update()
-    {
+    function update() {
         return $this->dbObj->update();
     }
 
-    function delete()
-    {
+    function delete() {
         return $this->dbObj->update();
     }
 
-    function addWhereCondition($condition)
-    {
-        return $this->dbObj->addWhereCondition($condition);
+    function addWhereCondition($condition) {
+        $this->dbObj->addWhereCondition($condition);
+        return $this;
+    }
+
+    public function addOrderBy($orderby) {
+
+    }
+
+    public function addLimit($limit) {
+
+    }
+
+    public function addOffset($offset) {
+
     }
 
 }
