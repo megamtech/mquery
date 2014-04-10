@@ -48,7 +48,7 @@ class cNoSql
     {
         $this->dbObj->table = $this->table;
         $this->dbObj->join_condition = $this->join_condition;
-        $this->column = $this->column;
+        $this->dbObj->column = $this->column;
 
         return $this->dbObj->update();
     }
