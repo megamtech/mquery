@@ -19,17 +19,21 @@ class cMongo {
     public $connection;
     //collection
     public $table;
+    private $condition;
     //fields
     public $column;
     //DB
     public $db;
+    public $orderby;
+    public $limit;
+    public $offset;
+    public $result;
+    private $cursor;
 
     /**
      *
      * @var Mixed
      */
-    public $result;
-
     public function __construct($newDatabaseInfo) {
         $this->getConnection($newDatabaseInfo);
     }
@@ -50,8 +54,26 @@ class cMongo {
     }
 
     public function read() {
-        print_r($this->db->{$this->table});
-//        $this->db->{$this->table}->find($this->condition, $this->column)->sort($this->orderby)->limit($this->limit)->skip($this->offset);
+        //      echo $this->table;
+//        print_r($this->db->{$this->table});
+        $this->column = is_array($this->column) ? $this->column : array();
+        $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
+
+        if ($this->orderby) {
+            $this->cursor = $this->cursor->sort($this->orderby);
+        }
+        if ($this->limit) {
+            $this->cursor = $this->cursor->limit($this->limit);
+        }
+        if ($this->offset) {
+            $this->cursor = $this->cursor->skip($this->offset);
+        }
+        foreach ($this->cursor as $doc) {
+            $this->result[] = $doc;
+        }
+
+        return $this->result;
+        //return ->find($this->condition, $this->column)->sort($this->orderby)->limit($this->limit)->skip($this->offset);
     }
 
     public function update() {
@@ -60,7 +82,7 @@ class cMongo {
     }
 
     public function addWhereCondition($condition) {
-
+        $this->condition = is_array($condition) ? $condition : array();
         return $this;
     }
 

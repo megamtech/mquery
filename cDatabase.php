@@ -56,10 +56,10 @@ Class cDatabase implements cModel {
     }
 
     public function read() {
-        $this->dbObj->table;
+        $this->dbObj->table = $this->table;
         $this->dbObj->join_condition = $this->join_condition;
         $this->column = $this->column;
-        $this->dbObj->read();
+        return $this->dbObj->read();
     }
 
     public function delete() {
@@ -79,7 +79,7 @@ Class cDatabase implements cModel {
         $this->dbObj->addOffset($offset);
     }
 
-    public function addWhereCondition($condition) {
+    public function addWhereCondition($condition = array()) {
 
         $this->dbObj->addWhereCondition($condition);
         return $this;

@@ -26,6 +26,10 @@ class cNoSql {
     }
 
     function read() {
+        $this->dbObj->table = $this->table;
+        $this->dbObj->join_condition = $this->join_condition;
+        $this->column = $this->column;
+
         return $this->dbObj->read();
     }
 

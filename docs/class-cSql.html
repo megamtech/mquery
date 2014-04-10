@@ -80,16 +80,12 @@
 	<h1>Class cSql</h1>
 
 
+	<div class="description">
+	
+<p>Description of cModal</p>
 
-	<dl class="tree">
-		<dd style="padding-left:0px">
-<b><span>cSql</span></b>			
-			 implements 
-				<a href="class-cModel.html"><span>cModel</span></a>
-			
-			
-		</dd>
-	</dl>
+	</div>
+
 
 
 
@@ -104,11 +100,9 @@
 		
 		
 
-				<b>Copyright:</b>
-				(c) 2013, Megam Technologies LLP<br />
 				<b>Author:</b>
 				gt<br />
-		<b>Located at</b> <a href="source-class-cSql.html#3-186" title="Go to source code">cSql.php</a><br />
+		<b>Located at</b> <a href="source-class-cSql.html#8-191" title="Go to source code">cSql.php</a><br />
 	</div>
 
 
@@ -126,7 +120,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-cSql.html#29-34" title="Go to source code">__construct</a>( <span>mixed <var>$dbType</var></span> )</code>
+		<code><a href="source-class-cSql.html#34-39" title="Go to source code">__construct</a>( <span>mixed <var>$newDatabaseInfo</var></span> )</code>
 
 		<div class="description short">
 			
@@ -155,7 +149,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_resetQuery">#</a>
-		<code><a href="source-class-cSql.html#36-41" title="Go to source code">resetQuery</a>( )</code>
+		<code><a href="source-class-cSql.html#41-49" title="Go to source code">resetQuery</a>( )</code>
 
 		<div class="description short">
 			
@@ -168,6 +162,10 @@
 
 
 
+				<h4>Assert</h4>
+				<div class="list">
+						($this-&gt;query) == ""<br />
+				</div>
 
 
 		</div>
@@ -177,14 +175,14 @@
 
 		<td class="attributes"><code>
 			 public 
-			type
+			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_create">#</a>
-		<code><a href="source-class-cSql.html#43-56" title="Go to source code">create</a>( )</code>
+		<code><a href="source-class-cSql.html#51-61" title="Go to source code">create</a>( )</code>
 
 		<div class="description short">
 			
@@ -195,16 +193,10 @@
 
 
 
-				<h4>Returns</h4>
-				<div class="list">
-					<code>type</code><br>Description<br />
-				</div>
 
 
 
 
-				<h4>Implementation of</h4>
-				<div class="list"><code><a href="class-cModel.html#_create">cModel::create()</a></code></div>
 		</div>
 		</div></td>
 	</tr>
@@ -219,7 +211,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_createmultiple">#</a>
-		<code><a href="source-class-cSql.html#58-70" title="Go to source code">createmultiple</a>( )</code>
+		<code><a href="source-class-cSql.html#63-75" title="Go to source code">createmultiple</a>( )</code>
 
 		<div class="description short">
 			
@@ -248,7 +240,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_read">#</a>
-		<code><a href="source-class-cSql.html#72-93" title="Go to source code">read</a>( )</code>
+		<code><a href="source-class-cSql.html#77-98" title="Go to source code">read</a>( )</code>
 
 		<div class="description short">
 			
@@ -263,8 +255,6 @@
 
 
 
-				<h4>Implementation of</h4>
-				<div class="list"><code><a href="class-cModel.html#_read">cModel::read()</a></code></div>
 		</div>
 		</div></td>
 	</tr>
@@ -279,7 +269,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_update">#</a>
-		<code><a href="source-class-cSql.html#95-101" title="Go to source code">update</a>( )</code>
+		<code><a href="source-class-cSql.html#100-106" title="Go to source code">update</a>( )</code>
 
 		<div class="description short">
 			
@@ -294,8 +284,6 @@
 
 
 
-				<h4>Implementation of</h4>
-				<div class="list"><code><a href="class-cModel.html#_update">cModel::update()</a></code></div>
 		</div>
 		</div></td>
 	</tr>
@@ -310,7 +298,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_alter">#</a>
-		<code><a href="source-class-cSql.html#103-115" title="Go to source code">alter</a>( )</code>
+		<code><a href="source-class-cSql.html#108-120" title="Go to source code">alter</a>( )</code>
 
 		<div class="description short">
 			
@@ -339,7 +327,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_delete">#</a>
-		<code><a href="source-class-cSql.html#117-122" title="Go to source code">delete</a>( )</code>
+		<code><a href="source-class-cSql.html#122-127" title="Go to source code">delete</a>( )</code>
 
 		<div class="description short">
 			
@@ -354,8 +342,6 @@
 
 
 
-				<h4>Implementation of</h4>
-				<div class="list"><code><a href="class-cModel.html#_delete">cModel::delete()</a></code></div>
 		</div>
 		</div></td>
 	</tr>
@@ -370,7 +356,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addWhereCondition">#</a>
-		<code><a href="source-class-cSql.html#124-129" title="Go to source code">addWhereCondition</a>( )</code>
+		<code><a href="source-class-cSql.html#129-134" title="Go to source code">addWhereCondition</a>( <span>mixed <var>$condition</var></span> )</code>
 
 		<div class="description short">
 			
@@ -399,7 +385,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addGroupBy">#</a>
-		<code><a href="source-class-cSql.html#131-134" title="Go to source code">addGroupBy</a>( )</code>
+		<code><a href="source-class-cSql.html#136-139" title="Go to source code">addGroupBy</a>( )</code>
 
 		<div class="description short">
 			
@@ -428,7 +414,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addHaving">#</a>
-		<code><a href="source-class-cSql.html#136-139" title="Go to source code">addHaving</a>( )</code>
+		<code><a href="source-class-cSql.html#141-144" title="Go to source code">addHaving</a>( )</code>
 
 		<div class="description short">
 			
@@ -457,7 +443,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addOrderBy">#</a>
-		<code><a href="source-class-cSql.html#141-145" title="Go to source code">addOrderBy</a>( )</code>
+		<code><a href="source-class-cSql.html#146-150" title="Go to source code">addOrderBy</a>( )</code>
 
 		<div class="description short">
 			
@@ -486,7 +472,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addLimit">#</a>
-		<code><a href="source-class-cSql.html#147-150" title="Go to source code">addLimit</a>( )</code>
+		<code><a href="source-class-cSql.html#152-155" title="Go to source code">addLimit</a>( )</code>
 
 		<div class="description short">
 			
@@ -515,7 +501,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addOffsetBy">#</a>
-		<code><a href="source-class-cSql.html#152-156" title="Go to source code">addOffsetBy</a>( )</code>
+		<code><a href="source-class-cSql.html#157-161" title="Go to source code">addOffsetBy</a>( )</code>
 
 		<div class="description short">
 			
@@ -544,7 +530,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_executeRead">#</a>
-		<code><a href="source-class-cSql.html#158-162" title="Go to source code">executeRead</a>( )</code>
+		<code><a href="source-class-cSql.html#163-167" title="Go to source code">executeRead</a>( )</code>
 
 		<div class="description short">
 			
@@ -573,7 +559,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_executeWrite">#</a>
-		<code><a href="source-class-cSql.html#164-168" title="Go to source code">executeWrite</a>( )</code>
+		<code><a href="source-class-cSql.html#169-173" title="Go to source code">executeWrite</a>( )</code>
 
 		<div class="description short">
 			
@@ -602,7 +588,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getColumnDetails">#</a>
-		<code><a href="source-class-cSql.html#170-172" title="Go to source code">getColumnDetails</a>( <span>mixed <var>$table</var></span> )</code>
+		<code><a href="source-class-cSql.html#175-177" title="Go to source code">getColumnDetails</a>( <span>mixed <var>$table</var></span> )</code>
 
 		<div class="description short">
 			
@@ -631,7 +617,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getTableDetails">#</a>
-		<code><a href="source-class-cSql.html#174-176" title="Go to source code">getTableDetails</a>( <span>mixed <var>$columns</var> = <span class="php-quote">&quot;&quot;</span></span>, <span>mixed <var>$condition</var> = <span class="php-quote">&quot;&quot;</span></span> )</code>
+		<code><a href="source-class-cSql.html#179-181" title="Go to source code">getTableDetails</a>( <span>mixed <var>$columns</var> = <span class="php-quote">&quot;&quot;</span></span>, <span>mixed <var>$condition</var> = <span class="php-quote">&quot;&quot;</span></span> )</code>
 
 		<div class="description short">
 			
@@ -660,7 +646,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getNextVal">#</a>
-		<code><a href="source-class-cSql.html#178-180" title="Go to source code">getNextVal</a>( <span>mixed <var>$seq_name</var></span> )</code>
+		<code><a href="source-class-cSql.html#183-185" title="Go to source code">getNextVal</a>( <span>mixed <var>$seq_name</var></span> )</code>
 
 		<div class="description short">
 			
@@ -689,7 +675,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getChildTables">#</a>
-		<code><a href="source-class-cSql.html#182-184" title="Go to source code">getChildTables</a>( <span>mixed <var>$table</var></span> )</code>
+		<code><a href="source-class-cSql.html#187-189" title="Go to source code">getChildTables</a>( <span>mixed <var>$table</var></span> )</code>
 
 		<div class="description short">
 			
@@ -729,7 +715,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#10" title="Go to source code"><var>$column</var></a>
+				<a href="source-class-cSql.html#15" title="Go to source code"><var>$column</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -752,7 +738,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#11" title="Go to source code"><var>$parent_only</var></a>
+				<a href="source-class-cSql.html#16" title="Go to source code"><var>$parent_only</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -775,7 +761,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#12" title="Go to source code"><var>$table</var></a>
+				<a href="source-class-cSql.html#17" title="Go to source code"><var>$table</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -798,7 +784,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#13" title="Go to source code"><var>$join_condition</var></a>
+				<a href="source-class-cSql.html#18" title="Go to source code"><var>$join_condition</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -821,7 +807,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#14" title="Go to source code"><var>$condition</var></a>
+				<a href="source-class-cSql.html#19" title="Go to source code"><var>$condition</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -844,7 +830,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#15" title="Go to source code"><var>$group_by</var></a>
+				<a href="source-class-cSql.html#20" title="Go to source code"><var>$group_by</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -867,7 +853,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#16" title="Go to source code"><var>$having</var></a>
+				<a href="source-class-cSql.html#21" title="Go to source code"><var>$having</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -890,7 +876,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#17" title="Go to source code"><var>$order_by</var></a>
+				<a href="source-class-cSql.html#22" title="Go to source code"><var>$order_by</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -913,7 +899,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#18" title="Go to source code"><var>$limit</var></a>
+				<a href="source-class-cSql.html#23" title="Go to source code"><var>$limit</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -936,7 +922,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#19" title="Go to source code"><var>$offset_by</var></a>
+				<a href="source-class-cSql.html#24" title="Go to source code"><var>$offset_by</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -959,7 +945,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#20" title="Go to source code"><var>$sub_query</var></a>
+				<a href="source-class-cSql.html#25" title="Go to source code"><var>$sub_query</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -982,7 +968,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#21" title="Go to source code"><var>$query</var></a>
+				<a href="source-class-cSql.html#26" title="Go to source code"><var>$query</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1005,7 +991,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#22" title="Go to source code"><var>$exclude_columns</var></a>
+				<a href="source-class-cSql.html#27" title="Go to source code"><var>$exclude_columns</var></a>
 		</td>
 		<td class="value"><code><span class="php-quote">&quot;&quot;</span></code></td>
 		<td class="description"><div>
@@ -1028,7 +1014,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#23" title="Go to source code"><var>$returning</var></a>
+				<a href="source-class-cSql.html#28" title="Go to source code"><var>$returning</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1051,7 +1037,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#24" title="Go to source code"><var>$debug</var></a>
+				<a href="source-class-cSql.html#29" title="Go to source code"><var>$debug</var></a>
 		</td>
 		<td class="value"><code><span class="php-keyword1">false</span></code></td>
 		<td class="description"><div>
@@ -1074,7 +1060,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#25" title="Go to source code"><var>$lastsql</var></a>
+				<a href="source-class-cSql.html#30" title="Go to source code"><var>$lastsql</var></a>
 		</td>
 		<td class="value"><code><span class="php-quote">&quot;&quot;</span></code></td>
 		<td class="description"><div>
@@ -1097,7 +1083,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#26" title="Go to source code"><var>$dbType</var></a>
+				<a href="source-class-cSql.html#31" title="Go to source code"><var>$dbType</var></a>
 		</td>
 		<td class="value"><code><span class="php-quote">&quot;&quot;</span></code></td>
 		<td class="description"><div>
@@ -1120,7 +1106,7 @@
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cSql.html#27" title="Go to source code"><var>$result</var></a>
+				<a href="source-class-cSql.html#32" title="Go to source code"><var>$result</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
