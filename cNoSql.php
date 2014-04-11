@@ -18,6 +18,7 @@ class cNoSql
     public $dbObj;
     public $table;
     public $column;
+    public $condition;
 
     public function __construct($newDatabaseInfo)
     {
@@ -27,38 +28,33 @@ class cNoSql
         $this->dbObj = new $databasetypename($newDatabaseInfo);
     }
 
-    function read()
+    private function __setValues()
     {
         $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
-        $this->column = $this->column;
+        $this->dbObj->column = is_array($this->column) ? $this->column : array();
+    }
 
+    function read()
+    {
+        $this->__setValues();
         return $this->dbObj->read();
     }
 
     function create()
     {
-
-        $this->dbObj->table = $this->table;
-        $this->dbObj->column = $this->column;
+        $this->__setValues();
         return $this->dbObj->create();
     }
 
     function update()
     {
-        $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
-        $this->dbObj->column = $this->column;
-
+        $this->__setValues();
         return $this->dbObj->update();
     }
 
     function delete()
     {
-        $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
-        $this->column = $this->column;
-
+        $this->__setValues();
         return $this->dbObj->update();
     }
 
@@ -70,17 +66,20 @@ class cNoSql
 
     public function addOrderBy($orderby)
     {
-
+        $this->dbObj->addOrderBy($orderby);
+        return $this;
     }
 
     public function addLimit($limit)
     {
-
+        $this->dbObj->addLimit($limit);
+        return $this;
     }
 
     public function addOffset($offset)
     {
-
+        $this->dbObj->addOffset($offset);
+        return $this;
     }
 
 }

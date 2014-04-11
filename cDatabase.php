@@ -18,7 +18,7 @@ Class cDatabase implements cModel
     public $dbObj;
     public $dbType;
     public $table;
-    public $join_condition;
+    public $condition;
     public $column;
 
     public function __construct($newDatabaseInfo = array())
@@ -53,7 +53,7 @@ Class cDatabase implements cModel
     {
 
         $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
+        $this->dbObj->condition = $this->condition;
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->create();
@@ -62,7 +62,7 @@ Class cDatabase implements cModel
     public function update()
     {
         $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
+        $this->dbObj->condition = $this->condition;
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->update();
@@ -71,8 +71,8 @@ Class cDatabase implements cModel
     public function read()
     {
         $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
-        $this->column = $this->column;
+        $this->dbObj->condition = $this->condition;
+        $this->dbObj->column = $this->column;
         return $this->dbObj->read();
     }
 

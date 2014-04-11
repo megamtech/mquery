@@ -19,7 +19,7 @@ class cMongo {
     public $connection;
     //collection
     public $table;
-    private $condition;
+    public $condition;
     //fields
     public $column;
     //DB
@@ -29,6 +29,7 @@ class cMongo {
     public $offset;
     public $result;
     private $cursor;
+    public $returnType = "json";
 
     /**
      *
@@ -49,41 +50,66 @@ class cMongo {
     }
 
     public function create() {
+        try {
 
-        $this->column['_id'] = $this->getNextSequence();
-        $this->db->{$this->table}->insert($this->column);
-        return $this->column['_id'];
+            $this->result = $this->column['_id'] = $this->getNextSequence();
+            $this->db->{$this->table}->insert($this->column);
+            $this->resetDefaults();
+            return $this->result;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function delete() {
-        return $this->db->{$this->table}->remove($this->condition);
+        try {
+            $this->resetDefaults();
+            return $this->db->{$this->table}->remove($this->condition);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function read() {
-        $this->column = is_array($this->column) ? $this->column : array();
-        $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
+        try {
 
-        if ($this->orderby) {
-            $this->cursor = $this->cursor->sort($this->orderby);
-        }
-        if ($this->limit) {
-            $this->cursor = $this->cursor->limit($this->limit);
-        }
-        if ($this->offset) {
-            $this->cursor = $this->cursor->skip($this->offset);
-        }
-        foreach ($this->cursor as $doc) {
-            $this->result[] = $doc;
-        }
+            $this->result = array();
+            $this->condition = array();
+            $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
-        return $this->result;
+            if ($this->orderby) {
+                $this->cursor = $this->cursor->sort($this->orderby);
+            }
+            if ($this->limit) {
+                $this->cursor = $this->cursor->limit($this->limit);
+            }
+            if ($this->offset) {
+                $this->cursor = $this->cursor->skip($this->offset);
+            }
+
+            foreach ($this->cursor as $doc) {
+                $this->result[] = $doc;
+            }
+
+            $this->resetDefaults();
+            return $this->result;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function update() {
-        return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
+        try {
+            return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
+
+            $this->resetDefaults();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function addWhereCondition($condition) {
+
         $this->condition = is_array($condition) ? $condition : array();
         return $this;
     }
@@ -92,6 +118,11 @@ class cMongo {
 
         $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
         return $result['seq'];
+    }
+
+    private function resetDefaults()
+    {
+        unset($this->table, $this->condition, $this->column, $this->offset, $this->orderby);
     }
 
 }
