@@ -14,12 +14,13 @@
  *
  *
  */
-class cMongo {
+class cMongo
+{
 
     public $connection;
     //collection
     public $table;
-    public $condition;
+    public $condition = array();
     //fields
     public $column;
     //DB
@@ -35,11 +36,13 @@ class cMongo {
      *
      * @var Mixed
      */
-    public function __construct($newDatabaseInfo) {
+    public function __construct($newDatabaseInfo)
+    {
         $this->getConnection($newDatabaseInfo);
     }
 
-    public function getConnection($newDatabaseInfo) {
+    public function getConnection($newDatabaseInfo)
+    {
         if (!$this->db) {
             if ($newDatabaseInfo['user'] && $newDatabaseInfo['pass']) {
                 $dbCredencials = $newDatabaseInfo['user'] . ':' . $newDatabaseInfo['pass'] . '@';
@@ -49,7 +52,8 @@ class cMongo {
         }
     }
 
-    public function create() {
+    public function create()
+    {
         try {
 
             $this->result = $this->column['_id'] = $this->getNextSequence();
@@ -61,20 +65,22 @@ class cMongo {
         }
     }
 
-    public function delete() {
+    public function delete()
+    {
         try {
-            $this->resetDefaults();
+            //$this->resetDefaults();
             return $this->db->{$this->table}->remove($this->condition);
         } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function read() {
+    public function read()
+    {
         try {
 
             $this->result = array();
-            $this->condition = array();
+
             $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
             if ($this->orderby) {
@@ -92,29 +98,33 @@ class cMongo {
             }
 
             $this->resetDefaults();
+
             return $this->result;
         } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function update() {
+    public function update()
+    {
         try {
-            return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
-
+//Todo Fix  the $set problem for multiple columns now it works as replace not update a specific column.
+            $this->result = $this->db->{$this->table}->update($this->condition, $this->column);
             $this->resetDefaults();
+            return $this->result;
         } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function addWhereCondition($condition) {
-
-        $this->condition = is_array($condition) ? $condition : array();
+    public function addWhereCondition($condition = array())
+    {
+        $this->condition = $condition;
         return $this;
     }
 
-    private function getNextSequence() {
+    private function getNextSequence()
+    {
 
         $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
         return $result['seq'];
@@ -122,7 +132,9 @@ class cMongo {
 
     private function resetDefaults()
     {
-        unset($this->table, $this->condition, $this->column, $this->offset, $this->orderby);
+        unset($this->table, $this->offset, $this->orderby);
+        $this->condition = array();
+        $this->column = array();
     }
 
 }

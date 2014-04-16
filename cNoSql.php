@@ -18,7 +18,6 @@ class cNoSql
     public $dbObj;
     public $table;
     public $column;
-    public $condition;
 
     public function __construct($newDatabaseInfo)
     {
@@ -55,11 +54,12 @@ class cNoSql
     function delete()
     {
         $this->__setValues();
-        return $this->dbObj->update();
+        return $this->dbObj->delete();
     }
 
     function addWhereCondition($condition)
     {
+
         $this->dbObj->addWhereCondition($condition);
         return $this;
     }

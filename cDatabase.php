@@ -53,7 +53,6 @@ Class cDatabase implements cModel
     {
 
         $this->dbObj->table = $this->table;
-        $this->dbObj->condition = $this->condition;
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->create();
@@ -62,7 +61,6 @@ Class cDatabase implements cModel
     public function update()
     {
         $this->dbObj->table = $this->table;
-        $this->dbObj->condition = $this->condition;
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->update();
@@ -71,17 +69,14 @@ Class cDatabase implements cModel
     public function read()
     {
         $this->dbObj->table = $this->table;
-        $this->dbObj->condition = $this->condition;
         $this->dbObj->column = $this->column;
+
         return $this->dbObj->read();
     }
 
     public function delete()
     {
         $this->dbObj->table = $this->table;
-        $this->dbObj->join_condition = $this->join_condition;
-        $this->column = $this->column;
-
         return $this->dbObj->delete();
     }
 
