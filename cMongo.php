@@ -68,8 +68,9 @@ class cMongo
     public function delete()
     {
         try {
-            //$this->resetDefaults();
-            return $this->db->{$this->table}->remove($this->condition);
+            $this->result = $this->db->{$this->table}->remove($this->condition);
+            $this->resetDefaults();
+            return $this->result;
         } catch (Exception $e) {
             return $e->getMessage();
         }
