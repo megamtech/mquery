@@ -14,8 +14,7 @@
  *
  *
  */
-class cMongo
-{
+class cMongo {
 
     public $connection;
     //collection
@@ -36,13 +35,11 @@ class cMongo
      *
      * @var Mixed
      */
-    public function __construct($newDatabaseInfo)
-    {
+    public function __construct($newDatabaseInfo) {
         $this->getConnection($newDatabaseInfo);
     }
 
-    public function getConnection($newDatabaseInfo)
-    {
+    public function getConnection($newDatabaseInfo) {
         if (!$this->db) {
             if ($newDatabaseInfo['user'] && $newDatabaseInfo['pass']) {
                 $dbCredencials = $newDatabaseInfo['user'] . ':' . $newDatabaseInfo['pass'] . '@';
@@ -52,8 +49,7 @@ class cMongo
         }
     }
 
-    public function create()
-    {
+    public function create() {
         try {
 
             $this->result = $this->column['_id'] = $this->getNextSequence();
@@ -65,8 +61,7 @@ class cMongo
         }
     }
 
-    public function delete()
-    {
+    public function delete() {
         try {
             $this->result = $this->db->{$this->table}->remove($this->condition);
             $this->resetDefaults();
@@ -76,12 +71,10 @@ class cMongo
         }
     }
 
-    public function read()
-    {
+    public function read() {
         try {
 
             $this->result = array();
-            print_r($this->condition);
             $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
             if ($this->orderby) {
@@ -105,8 +98,7 @@ class cMongo
         }
     }
 
-    public function update()
-    {
+    public function update() {
         try {
 //Todo Fix  the $set problem for multiple columns now it works as replace not update a specific column.
             $this->result = $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array("multiple" => True));
@@ -117,8 +109,7 @@ class cMongo
         }
     }
 
-    public function addWhereCondition($condition = array())
-    {
+    public function addWhereCondition($condition = array()) {
 
         if (is_array($condition['$or'])) {
 
@@ -134,8 +125,7 @@ class cMongo
         return $this;
     }
 
-    function createConditionBasedonType($value)
-    {
+    function createConditionBasedonType($value) {
         if (is_array($value)) {
             switch (key($value)) {
                 case 'like':
@@ -146,15 +136,17 @@ class cMongo
         return $value;
     }
 
-    private function getNextSequence()
-    {
+    private function getNextSequence() {
 
         $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
         return $result['seq'];
     }
 
-    private function resetDefaults()
-    {
+    function addOrderBy($orderby) {
+        return $this;
+    }
+
+    private function resetDefaults() {
         unset($this->table, $this->offset, $this->orderby);
         $this->condition = array();
         $this->column = array();
