@@ -81,7 +81,7 @@ class cMongo
         try {
 
             $this->result = array();
-
+            print_r($this->condition);
             $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
             if ($this->orderby) {
@@ -99,7 +99,6 @@ class cMongo
             }
 
             $this->resetDefaults();
-
             return $this->result;
         } catch (Exception $e) {
             return $e->getMessage();
@@ -110,7 +109,7 @@ class cMongo
     {
         try {
 //Todo Fix  the $set problem for multiple columns now it works as replace not update a specific column.
-            $this->result = $this->db->{$this->table}->update($this->condition, $this->column);
+            $this->result = $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array("multiple" => True));
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
@@ -120,8 +119,31 @@ class cMongo
 
     public function addWhereCondition($condition = array())
     {
+
+        if (is_array($condition['$or'])) {
+
+            $newcondition = array('$or' => array());
+            $index = 0;
+            foreach ($condition['$or'] as $key => $value) {
+                $newcondition['$or'][$index][$key] = $this->createConditionBasedonType($value);
+            }
+            $condition = $newcondition;
+        }
+
         $this->condition = $condition;
         return $this;
+    }
+
+    function createConditionBasedonType($value)
+    {
+        if (is_array($value)) {
+            switch (key($value)) {
+                case 'like':
+                    $value = new MongoRegex('/' . current($value) . '/i');
+                    break;
+            }
+        }
+        return $value;
     }
 
     private function getNextSequence()

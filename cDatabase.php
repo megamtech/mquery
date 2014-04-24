@@ -10,7 +10,7 @@
  *
  * @author gt
  */
-include 'cModel.php';
+require_once 'cModel.php';
 
 Class cDatabase implements cModel
 {
@@ -37,11 +37,11 @@ Class cDatabase implements cModel
             }
             if ($this->dbType != 'mongo') {
 
-                include 'cSql.php';
+                require_once 'cSql.php';
 
                 $this->dbObj = new cSql($newDatabaseInfo);
             } else {
-                include 'cNoSql.php';
+                require_once 'cNoSql.php';
 
                 $this->dbObj = new cNoSql($newDatabaseInfo);
             }
