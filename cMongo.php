@@ -144,6 +144,11 @@ class cMongo
     }
 
     function addOrderBy($orderby) {
+        if (is_array($orderby)) {
+            foreach ($orderby as $column => $order) {
+                $this->orderby[$column] = ($order != 'asc') ? -1 : 1;
+            }
+        }
         return $this;
     }
 
