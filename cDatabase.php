@@ -13,7 +13,7 @@
 require_once 'cModel.php';
 
 Class cDatabase implements cModel
-    {
+{
 
     public $dbObj;
     public $dbType;
@@ -21,7 +21,8 @@ Class cDatabase implements cModel
     public $condition;
     public $column;
 
-    public function __construct($newDatabaseInfo = array()) {
+    public function __construct($newDatabaseInfo = array())
+    {
 
         if (!$this->dbObj) {
 
@@ -48,7 +49,8 @@ Class cDatabase implements cModel
         }
     }
 
-    public function create() {
+    public function create()
+    {
 
         $this->dbObj->table = $this->table;
         $this->dbObj->column = $this->column;
@@ -56,46 +58,53 @@ Class cDatabase implements cModel
         return $this->dbObj->create();
     }
 
-    public function update() {
+    public function update()
+    {
         $this->dbObj->table = $this->table;
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->update();
     }
 
-    public function read() {
+    public function read()
+    {
         $this->dbObj->table = $this->table;
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->read();
     }
 
-    public function delete() {
+    public function delete()
+    {
         $this->dbObj->table = $this->table;
         return $this->dbObj->delete();
     }
 
-    public function addOrderBy($orderby) {
+    public function addOrderBy($orderby)
+    {
         $this->dbObj->addOrderBy($orderby);
         return $this;
     }
 
-    public function addLimit($limit) {
+    public function addLimit($limit)
+    {
+        $this->dbObj->addLimit($limit);
+        return $this;
+    }
+
+    public function addOffset($offset)
+    {
         $this->dbObj->addOffset($offset);
         return $this;
     }
 
-    public function addOffset($offset) {
-        $this->dbObj->addOffset($offset);
-        return $this;
-    }
-
-    public function addWhereCondition($condition = array()) {
+    public function addWhereCondition($condition = array())
+    {
 
         $this->dbObj->addWhereCondition($condition);
         return $this;
     }
 
-    }
+}
 
 ?>
