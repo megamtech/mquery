@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -14,13 +15,12 @@
  *
  *
  */
-class cMongo
-    {
+class cMongo {
 
     public $connection;
     //collection
     public $table;
-    public $condition = array();
+    public $condition;
     //fields
     public $column;
     //DB
@@ -64,9 +64,8 @@ class cMongo
 
     public function delete() {
         try {
-            $this->result = $this->db->{$this->table}->remove($this->condition);
             $this->resetDefaults();
-            return $this->result;
+            return $this->db->{$this->table}->remove($this->condition);
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -101,74 +100,155 @@ class cMongo
 
     public function update() {
         try {
-//Todo Fix  the $set problem for multiple columns now it works as replace not update a specific column.
-            $this->result = $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array("multiple" => True));
+            return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
+
             $this->resetDefaults();
-            return $this->result;
         } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
-    public function addWhereCondition($condition = array()) {
+    /**
+     *
+     * @param type $condition= array(
+     *
+     * columnname,&ANDARRAY,&ORARRAY=>Array(
+     * 'values'=>array(1,2,n),string| ~~~Mandatory ~~~default string
+     * * 'type'=>'&lt',&gt,&starts,&ends,&contains,&eq,&between,&!eq,&!like,&notbetween,&!contains,&!startswith,&!endwith,&empty,&!empty,&in,&!in| ~~~ Optional ~~~ default &eq
+     * ,dbtype=>|string,int,number,date~~Optional ~~~ default string
+     * 'optype'=>'&AND',&OR | ~~~ Optional ~~~ Default AND
+     * ))
+     * @return \cMongo
+     */
+    public function addWhereCondition($condition) {
 
-        if (is_array($condition['$or'])) {
 
-            $newcondition = array('$or' => array());
-            $index = 0;
-            foreach ($condition['$or'] as $key => $value) {
-                $newcondition['$or'][$index][$key] = $this->createConditionBasedonType($value);
+        $tempcondition = array();
+        if (is_array($condition)) {
+            foreach ($this->condition as $columnname => $values) {
+                if (($columnname != '&ANDARRAY' || $columnname != '&ORARRAY')) {
+                    if (is_array($values) || $values['type'] == '') {
+                        if ($values['optype'] == '&OR') {
+                            $tempcondition['$or'] = $this->createFilterCondition($columnname, $values['type'], $values['values'], $values['dbtype']);
+                        } else {
+                            $tempcondition['$and'] = $this->createFilterCondition($columnname, $values['type'], $values['values'], $values['dbtype']);
+                        }
+                    } else {
+                        $tempcondition[$columnname] = $values;
+                    }
+                } else {
+//TODO  Yet to implement Array of conditions
+                }
             }
-            $condition = $newcondition;
         }
-
-        $this->condition = $condition;
+        $this->condition = $tempcondition;
         return $this;
     }
 
-    function createConditionBasedonType($value) {
-        if (is_array($value)) {
-            switch (key($value)) {
-                case 'like':
-                    $value = new MongoRegex('/' . current($value) . '/i');
-                    break;
-            }
+    private function createFilterCondition($column, $type, $value, $dbtype) {
+        $return = array();
+        switch ($type) {
+            case '&lt':
+                $return[$column]['$lt'] = $this->changeDataType($dbtype, $value);
+                break;
+            case '&!lt':
+                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype, $value);
+                break;
+            case '&gt':
+                $return[$column]['$gt'] = $this->changeDataType($dbtype, $value);
+                break;
+            case '&!gt':
+                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype, $value);
+                break;
+            case '&starts':
+                $return[$column]['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype, $value) . "/i");
+                break;
+            case '&!starts':
+                $return[$column]['$not']['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype, $value) . "/i");
+
+                break;
+            case '&ends':
+                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "$/i");
+                break;
+            case '&!ends':
+                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "$/i");
+                break;
+            case '&contains':
+                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "/i");
+            case '&!contains':
+                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "/i");
+
+                break;
+            case '&between':
+                $return[$column]['$lt'] = $this->changeDataType($dbtype, $value[0]);
+                $return[$column]['$gt'] = $this->changeDataType($dbtype, $value[1]);
+            case '&!between':
+
+                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype, $value[0]);
+                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype, $value[1]);
+                break;
+            case '&empty':
+                $return[$column] = null;
+                break;
+            case '&!empty':
+                $return[$column]['$ne'] = null;
+
+                break;
+            case '&in':
+                foreach ($value as $individual_value) {
+                    $return[$column]['$in'][] = $this->changeDataType($dbtype, $individual_value);
+                }
+                break;
+            case '&!in':
+                foreach ($value as $individual_value) {
+                    $return[$column]['$nin'] = $this->changeDataType($dbtype, $individual_value);
+                }
+                break;
+            case '&!eq':
+                $return[$column]['$ne'] = $this->changeDataType($dbtype, $value);
+
+                break;
+
+            default:
+                $return[$column] = $this->changeDataType($dbtype, $value);
+                break;
         }
-        return $value;
+    }
+
+    private function changeDataType($type, $value) {
+        switch ($type) {
+            case 'date':
+                $result = new MongoDate($value);
+
+                break;
+            case 'int':
+
+                $result = (int) $value;
+                break;
+            case 'number':
+
+                $result = (double) $value;
+                break;
+
+            default:
+                $result = (string) "$value";
+                break;
+        }
+        return $result;
     }
 
     private function getNextSequence() {
+
+
 
         $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
         return $result['seq'];
     }
 
-    function addOrderBy($orderby) {
-        if (is_array($orderby)) {
-            foreach ($orderby as $column => $order) {
-                $this->orderby[$column] = ($order != 'asc') ? -1 : 1;
-            }
-        }
-        return $this;
-    }
-
-    public function addLimit($limit) {
-        $this->limit = $limit;
-        return $this;
-    }
-
-    public function addOffset($offset) {
-
-        $this->offset_by = $offset;
-        return $this;
-    }
-
     private function resetDefaults() {
-        unset($this->table, $this->offset, $this->orderby);
-        $this->condition = array();
-        $this->column = array();
+        unset(
+                $this->table, $this->condition, $this->column, $this->offset, $this->orderby);
     }
 
-    }
-
+}
 ?>
