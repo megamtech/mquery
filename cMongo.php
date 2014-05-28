@@ -246,6 +246,17 @@ class cMongo {
         return $result;
     }
 
+    public function addLimit($limit) {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    public function addOffset($offset) {
+
+        $this->offset_by = $offset;
+        return $this;
+    }
+
     private function getNextSequence() {
 
 
