@@ -145,6 +145,15 @@ class cMongo {
         return $this;
     }
 
+    function addOrderBy($orderby) {
+        if (is_array($orderby)) {
+            foreach ($orderby as $column => $order) {
+                $this->orderby[$column] = ($order != 'asc') ? -1 : 1;
+            }
+        }
+        return $this;
+    }
+
     private function createFilterCondition($column, $type, $value, $dbtype) {
         $return = array();
         switch ($type) {
@@ -251,4 +260,5 @@ class cMongo {
     }
 
 }
+
 ?>
