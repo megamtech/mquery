@@ -125,7 +125,7 @@ class cMongo {
 
         $tempcondition = array();
         if (is_array($condition)) {
-            foreach ($this->condition as $columnname => $values) {
+            foreach ($condition as $columnname => $values) {
                 if (($columnname != '&ANDARRAY' || $columnname != '&ORARRAY')) {
                     if (is_array($values) || $values['type'] == '') {
                         if ($values['optype'] == '&OR') {
