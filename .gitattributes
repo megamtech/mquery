@@ -1,10 +1,4 @@
 * text=auto !eol
-/cDatabase.php -text
-/cModel.php -text
-/cMongo.php -text
-/cMysql.php -text
-/cNoSql.php -text
-/cSql.php -text
 docs/404.html -text
 docs/404.min.html -text
 docs/class-cDatabase.html -text
@@ -57,3 +51,9 @@ docs/tree.min.html -text
 /mquery.php -text
 nbproject/project.properties -text
 nbproject/project.xml -text
+src/cDatabase.php -text
+src/cModel.php -text
+src/cMongo.php -text
+src/cMysql.php -text
+src/cNoSql.php -text
+src/cSql.php -text
