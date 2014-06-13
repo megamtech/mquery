@@ -23,7 +23,7 @@ Class cDatabase implements cModel
 
     public function __construct($newDatabaseInfo = array())
     {
-
+        $this->dbType = DataBaseType;
         if (!$this->dbObj) {
 
             if ($newDatabaseInfo['type'] == '') {
