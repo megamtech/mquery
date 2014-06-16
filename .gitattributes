@@ -56,4 +56,5 @@ src/cModel.php -text
 src/cMongo.php -text
 src/cMysql.php -text
 src/cNoSql.php -text
+src/cPDO.php -text
 src/cSql.php -text
