@@ -158,14 +158,14 @@ class cSql {
 
     }
 
-    public function addGroupBy() {
+    public function addGroupBy($groupby) {
         $this->group_by = ($this->group_by) ? " GROUP BY " . ((is_array($this->group_by)) ? implode(', ',
                                 array_filter($this->group_by)) : $this->group_by) : "";
         return $this;
 
     }
 
-    public function addHaving() {
+    public function addHaving($having) {
         $this->having = ($this->having) ? " HAVING " . ((is_array($this->having)) ? implode(' AND ',
                                 $this->having) : $this->having) : "";
         return $this;
@@ -175,39 +175,25 @@ class cSql {
     public function addOrderBy($orderby) {
         if (is_array($orderby)) {
             foreach ($orderby as $ordercolumnName => $ordercolumnValue) {
-                $conditionarray[] = $ordercolumnName . " = '" . $ordercolumnValue . "'";
+                $conditionarray[] = $ordercolumnName . " " . $ordercolumnValue . "'";
             }
-            $this->order_by = " ORDER BY " . $ordercolumnName . ' ' . $ordercolumnValue;
+            $this->order_by = " ORDER BY " . implode(",", $conditionarray);
             //$this->orderby = ($this->order_by) ? " ORDER BY " . ((is_array($this->order_by)) ? implode(', ',array_filter($this->order_by)) : $this->order_by) : "";
         }
         return $this;
 
     }
 
-    public function addLimit() {
-        $this->limit = ($this->limit) ? " LIMIT " . $this->limit : "";
+    public function addLimit($limit) {
+        $this->limit = ($this->limit) ? " LIMIT " . $limit : "";
         return $this;
 
     }
 
-    public function addOffsetBy() {
+    public function addOffsetBy($offset) {
 
-        $this->offset_by = ($this->offset_by) ? " OFFSET " . $this->offset_by : "";
+        $this->offset_by = ($this->offset_by) ? " OFFSET " . $offset : "";
         return $this;
-
-    }
-
-    function executeRead() {
-        $this->dbObj->sql = $this->query;
-        $this->debug = false;
-        return $this->dbObj->read();
-
-    }
-
-    function executeWrite() {
-        $this->dbObj->sql = $this->query;
-        $this->debug = false;
-        return $this->dbObj->write();
 
     }
 
