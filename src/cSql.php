@@ -33,10 +33,8 @@ class cSql {
     private $dbObj;
 
     public function __construct($newDatabaseInfo) {
-
-        $databasetypename = 'c' . ucfirst($this->dbType);
-        include_once($databasetypename . '.php');
-        $this->dbObj = new $databasetypename($newDatabaseInfo);
+        include_once('cPDO.php');
+        $this->dbObj = new cPDO($newDatabaseInfo);
 
     }
 
@@ -66,9 +64,9 @@ class cSql {
         $this->query.=";";
 
         $this->dbObj->sql = $this->query;
+
         $this->resetQuery();
-        $this->dbObj->create();
-        return $this;
+        return $this->dbObj->create();
 
     }
 
@@ -88,7 +86,6 @@ class cSql {
     }
 
     public function read() {
-        $this->addWhereCondition()->addHaving()->addGroupBy()->addOrderBy()->addLimit()->addOffsetBy();
         $this->query = "SELECT ";
         if (is_array($this->column) || is_object($this->column)) {
             $columns = array();
@@ -106,19 +103,22 @@ class cSql {
         $this->query.= ( $this->join_condition) ? " " . ((is_array($this->join_condition)) ? implode(' ',
                                 $this->join_condition) : $this->join_condition) : "";
         $this->query.=$this->condition . $this->group_by . $this->having . $this->order_by . $this->limit . $this->offset_by;
-        $this->result = $this->executeRead();
+        echo $this->dbObj->sql = $this->query;
         $this->resetQuery();
-        return $this;
+        return $this->dbObj->read();
 
     }
 
     public function update() {
-        $this->column = is_object($this->column) ? (array) $this->column : $this->column;
-        $this->query = "UPDATE " . $this->parent_only . " " . $this->table . " SET " . implode(",",
-                        $this->column) . "" . $this->condition;
+        $this->query = "UPDATE " . $this->parent_only . " " . $this->table . " SET ";
+        foreach ($this->column as $columnName => $columnValue) {
+            $columnNames[] = $columnName . " = '" . $columnValue . "'";
+        }
+        $this->query .= implode(",", $columnNames) . $this->condition;
 
+        echo $this->dbObj->sql = $this->query;
         $this->resetQuery();
-        return $this;
+        return $this->dbObj->update();
 
     }
 
@@ -141,16 +141,19 @@ class cSql {
     public function delete() {
 
         $this->query = "DELETE FROM " . $this->parent_only . " " . $this->table . $this->condition;
+        $this->dbObj->sql = $this->query;
         $this->resetQuery();
-        return $this;
+        return $this->dbObj->delete();
 
     }
 
     public function addWhereCondition($condition) {
-
-        $this->condition = ($condition) ? " WHERE " . ((is_array($condition)) ? implode(' AND ',
-                                array_filter($condition)) : $condition) : "";
-
+        if (is_array($condition)) {
+            foreach ($condition as $columnName => $columnValue) {
+                $conditionarray[] = $columnName . " = '" . $columnValue . "'";
+            }
+            $this->condition = " Where " . implode(' AND ', $conditionarray);
+        }
         return $this;
 
     }
@@ -169,10 +172,14 @@ class cSql {
 
     }
 
-    public function addOrderBy() {
-
-        $this->order_by = ($this->order_by) ? " ORDER BY " . ((is_array($this->order_by)) ? implode(', ',
-                                array_filter($this->order_by)) : $this->order_by) : "";
+    public function addOrderBy($orderby) {
+        if (is_array($orderby)) {
+            foreach ($orderby as $ordercolumnName => $ordercolumnValue) {
+                $conditionarray[] = $ordercolumnName . " = '" . $ordercolumnValue . "'";
+            }
+            $this->order_by = " ORDER BY " . $ordercolumnName . ' ' . $ordercolumnValue;
+            //$this->orderby = ($this->order_by) ? " ORDER BY " . ((is_array($this->order_by)) ? implode(', ',array_filter($this->order_by)) : $this->order_by) : "";
+        }
         return $this;
 
     }

@@ -21,27 +21,19 @@ Class cDatabase implements cModel {
     public $column;
 
     public function __construct($newDatabaseInfo = array()) {
-        $this->dbType = DataBaseType;
+
         if (!$this->dbObj) {
-            if ($newDatabaseInfo['type'] == '') {
-                $newDatabaseInfo['type'] = DataBaseType;
-                $newDatabaseInfo['host'] = DataBaseHost;
-                $newDatabaseInfo['port'] = DataBasePort;
-                $newDatabaseInfo['user'] = DataBaseUser;
-                $newDatabaseInfo['pass'] = DataBasePass;
-                $newDatabaseInfo['name'] = DataBaseName;
-            }
-            if ($newDatabaseInfo['type'] != 'mongo') {
 
-                require_once 'cSql.php';
+            if ($newDatabaseInfo['type'] == 'mongo') {
 
-                $this->dbObj = new cSql($newDatabaseInfo);
-            } else {
                 require_once 'cNoSql.php';
 
                 $this->dbObj = new cNoSql($newDatabaseInfo);
+            } else {
+                require_once 'cSql.php';
+
+                $this->dbObj = new cSql($newDatabaseInfo);
             }
-            $this->dbObj->dbType = $newDatabaseInfo['type'];
         }
 
     }

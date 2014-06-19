@@ -25,6 +25,7 @@ class cPDO {
     public $offset;
     public $result;
     private $cursor;
+    public $sql;
 
     public function __construct($newDatabaseInfo) {
         $this->getConnection($newDatabaseInfo);
@@ -32,8 +33,9 @@ class cPDO {
     }
 
     public function getConnection($newDatabaseInfo) {
-        if (!$this->db) {
-            switch ($newDatabaseInfo) {
+
+        if (!$this->connection) {
+            switch ($newDatabaseInfo['type']) {
                 case 'mysql':
                     //MySQL
                     $this->connection = new PDO('mysql:host=' . $newDatabaseInfo['host'] . ';port=' . $newDatabaseInfo['port'] . ';dbname=' . $newDatabaseInfo['name'] . '',
@@ -78,6 +80,67 @@ class cPDO {
                     $this->connection = new PDO('sqlite2:' . $newDatabaseInfo['name'] . '.db');
                     break;
             }
+            return $this->connection;
+        }
+
+    }
+
+    function create() {
+        try {
+            //$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->beginTransaction();
+            $this->connection->exec($this->sql);
+            //TODO Fix for all db's
+            $lastid = $this->connection->lastInsertId();
+            $this->connection->commit();
+            return $lastid;
+        } catch (Exception $ex) {
+            $this->connection->rollBack();
+            return "Failed: " . $ex->getMessage();
+        }
+
+    }
+
+    function read() {
+        try {
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE,
+                    PDO::ERRMODE_EXCEPTION);
+            $this->result = $this->connection->prepare($this->sql);
+            $this->result->execute();
+            //TODO Fix for all db's
+            $result = $this->result->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (Exception $ex) {
+            $this->connection->rollBack();
+            return "Failed: " . $ex->getMessage();
+        }
+
+    }
+
+    function update() {
+        try {
+            //$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->beginTransaction();
+            $updatedrows = $this->connection->exec($this->sql);
+            $this->connection->commit();
+            return $updatedrows;
+        } catch (Exception $ex) {
+            $this->connection->rollBack();
+            return "Failed: " . $ex->getMessage();
+        }
+
+    }
+
+    function delete() {
+        try {
+            //$this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->beginTransaction();
+            $updatedrows = $this->connection->exec($this->sql);
+            $this->connection->commit();
+            return $deletedrows;
+        } catch (Exception $ex) {
+            $this->connection->rollBack();
+            return "Failed: " . $ex->getMessage();
         }
 
     }

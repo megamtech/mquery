@@ -109,7 +109,10 @@ class cMysql {
             $this->error .="<br/>" . $this->sql;
             return false;
         }
-    }
+    
+        
+        }
+    
 
     function getNextVal($seq_name) {
         $seqdata = $this->getCurrVal($seq_name);
