@@ -55,6 +55,14 @@ Class cDatabase implements cModel {
 
     }
 
+    public function count() {
+        $this->dbObj->table = $this->table;
+        $this->dbObj->column = $this->column;
+
+        return $this->dbObj->count();
+
+    }
+
     public function read() {
         $this->dbObj->table = $this->table;
         $this->dbObj->column = $this->column;
@@ -66,6 +74,19 @@ Class cDatabase implements cModel {
     public function delete() {
         $this->dbObj->table = $this->table;
         return $this->dbObj->delete();
+
+    }
+
+    function createTable() {
+        $this->dbObj->table = $this->table;
+        return $this->dbObj->createTable();
+
+    }
+
+    function createMultiple() {
+        $this->dbObj->table = $this->table;
+        $this->dbObj->column = $this->column;
+        return $this->dbObj->createMultiple();
 
     }
 
@@ -88,7 +109,6 @@ Class cDatabase implements cModel {
     }
 
     public function addWhereCondition($condition = array()) {
-
         $this->dbObj->addWhereCondition($condition);
         return $this;
 

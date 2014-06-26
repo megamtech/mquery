@@ -54,9 +54,13 @@ class cMongo {
 
     public function create() {
         try {
+            $seq = $this->getNextSequence();
+            if ($seq != '') {
+                $this->column['_id'] = $this->getNextSequence();
+            }
 
-            $this->result = $this->column['_id'] = $this->getNextSequence();
-            $this->db->{$this->table}->insert($this->column);
+            $this->db->{$this->table}->insert($this->column, array('fsync' => TRUE));
+            $this->result = $this->column['_id'];
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
@@ -79,8 +83,7 @@ class cMongo {
         try {
 
             $this->result = array();
-            $this->cursor = $this->db->{$this->table}->find($this->condition,
-                    $this->column);
+            $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
             if ($this->orderby) {
                 $this->cursor = $this->cursor->sort($this->orderby);
@@ -106,14 +109,36 @@ class cMongo {
 
     public function update() {
         try {
-            return $this->db->{$this->table}->update($this->condition,
-                            array('$set' => $this->column),
-                            array('multiple' => true));
+            return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
 
             $this->resetDefaults();
         } catch (Exception $e) {
             return $e->getMessage();
         }
+
+    }
+
+    public function count() {
+        try {
+            return $this->db->{$this->table}->count($this->condition, $this->limit, $this->offset);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+    }
+
+    public function createTable() {
+        return $this->db->createCollection($this->table);
+
+    }
+
+    public function createMultiple() {
+
+        $this->result = $this->db->{$this->table}->batchInsert($this->column);
+        foreach ($this->result as $value) {
+            $result[] = $value['id'];
+        }
+        return $result;
 
     }
 
@@ -136,13 +161,9 @@ class cMongo {
                 if (($columnname != '&ANDARRAY' || $columnname != '&ORARRAY')) {
                     if (is_array($values)) {
                         if ($values['optype'] == '&OR') {
-                            $tempcondition['$or'] = $this->createFilterCondition($columnname,
-                                    $values['type'], $values['values'],
-                                    $values['dbtype']);
+                            $tempcondition['$or'] = $this->createFilterCondition($columnname, $values['type'], $values['values'], $values['dbtype']);
                         } else {
-                            $tempcondition['$and'] = $this->createFilterCondition($columnname,
-                                    $values['type'], $values['values'],
-                                    $values['dbtype']);
+                            $tempcondition['$and'] = $this->createFilterCondition($columnname, $values['type'], $values['values'], $values['dbtype']);
                         }
                     } else {
                         $tempcondition[$columnname] = $values;
@@ -174,52 +195,40 @@ class cMongo {
                 $return[$column]['$lt'] = $this->changeDataType($dbtype, $value);
                 break;
             case '&!lt':
-                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype,
-                        $value);
+                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype, $value);
                 break;
             case '&gt':
                 $return[$column]['$gt'] = $this->changeDataType($dbtype, $value);
                 break;
             case '&!gt':
-                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype,
-                        $value);
+                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype, $value);
                 break;
             case '&starts':
-                $return[$column]['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype,
-                                $value) . "/i");
+                $return[$column]['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype, $value) . "/i");
                 break;
             case '&!starts':
-                $return[$column]['$not']['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype,
-                                $value) . "/i");
+                $return[$column]['$not']['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype, $value) . "/i");
 
                 break;
             case '&ends':
-                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
-                                $value) . "$/i");
+                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "$/i");
                 break;
             case '&!ends':
-                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
-                                $value) . "$/i");
+                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "$/i");
                 break;
             case '&contains':
-                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
-                                $value) . "/i");
+                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "/i");
             case '&!contains':
-                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
-                                $value) . "/i");
+                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "/i");
 
                 break;
             case '&between':
-                $return[$column]['$lt'] = $this->changeDataType($dbtype,
-                        $value[0]);
-                $return[$column]['$gt'] = $this->changeDataType($dbtype,
-                        $value[1]);
+                $return[$column]['$lt'] = $this->changeDataType($dbtype, $value[0]);
+                $return[$column]['$gt'] = $this->changeDataType($dbtype, $value[1]);
             case '&!between':
 
-                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype,
-                        $value[0]);
-                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype,
-                        $value[1]);
+                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype, $value[0]);
+                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype, $value[1]);
                 break;
             case '&empty':
                 $return[$column] = null;
@@ -230,14 +239,12 @@ class cMongo {
                 break;
             case '&in':
                 foreach ($value as $individual_value) {
-                    $return[$column]['$in'][] = $this->changeDataType($dbtype,
-                            $individual_value);
+                    $return[$column]['$in'][] = $this->changeDataType($dbtype, $individual_value);
                 }
                 break;
             case '&!in':
                 foreach ($value as $individual_value) {
-                    $return[$column]['$nin'] = $this->changeDataType($dbtype,
-                            $individual_value);
+                    $return[$column]['$nin'] = $this->changeDataType($dbtype, $individual_value);
                 }
                 break;
             case '&!eq':
@@ -292,16 +299,14 @@ class cMongo {
 
 
 
-        $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"),
-                array('$inc' => array("seq" => 1)));
+        $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
         return $result['seq'];
 
     }
 
     private function resetDefaults() {
         unset(
-                $this->table, $this->condition, $this->column, $this->offset,
-                $this->orderby);
+                $this->table, $this->condition, $this->column, $this->offset, $this->orderby);
 
     }
 
