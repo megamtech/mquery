@@ -38,34 +38,28 @@ class cPDO {
             switch ($newDatabaseInfo['type']) {
                 case 'mysql':
                     //MySQL
-                    $this->connection = new PDO('mysql:host=' . $newDatabaseInfo['host'] . ';port=' . $newDatabaseInfo['port'] . ';dbname=' . $newDatabaseInfo['name'] . '',
-                            $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
+                    $this->connection = new PDO('mysql:host=' . $newDatabaseInfo['host'] . ';port=' . $newDatabaseInfo['port'] . ';dbname=' . $newDatabaseInfo['name'] . '', $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
 
                     break;
                 case 'pgsql':
                     //PostgreSQL
-                    $this->connection = new PDO('pgsql:host=' . $newDatabaseInfo['host'] . ' port=' . $newDatabaseInfo['port'] . ' dbname=' . $newDatabaseInfo['name'],
-                            $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
+                    $this->connection = new PDO('pgsql:host=' . $newDatabaseInfo['host'] . ' port=' . $newDatabaseInfo['port'] . ' dbname=' . $newDatabaseInfo['name'], $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
                     break;
                 case 'oracle':
                     //Oracle
-                    $this->connection = new PDO('oci:dbname=//' . $newDatabaseInfo['host'] . ':' . $newDatabaseInfo['port'] . '/' . $newDatabaseInfo['name'],
-                            $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
+                    $this->connection = new PDO('oci:dbname=//' . $newDatabaseInfo['host'] . ':' . $newDatabaseInfo['port'] . '/' . $newDatabaseInfo['name'], $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
                     break;
                 case 'sybase':
                     //Sybase
-                    $this->connection = new PDO('sybase:host=' . $newDatabaseInfo['host'] . ';dbname=' . $newDatabaseInfo['name'],
-                            $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
+                    $this->connection = new PDO('sybase:host=' . $newDatabaseInfo['host'] . ';dbname=' . $newDatabaseInfo['name'], $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
                     break;
                 case 'mssql':
                     //Microsoft SQL Server
-                    $this->connection = new PDO('mssql:host=' . $newDatabaseInfo['host'] . ';dbname=' . $newDatabaseInfo['name'],
-                            $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
+                    $this->connection = new PDO('mssql:host=' . $newDatabaseInfo['host'] . ';dbname=' . $newDatabaseInfo['name'], $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
                     break;
                 case 'dblib':
                     //DB(Lib) /Lite
-                    $this->connection = new PDO('dblib:host=' . $newDatabaseInfo['host'] . ';dbname=' . $newDatabaseInfo['name'],
-                            $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
+                    $this->connection = new PDO('dblib:host=' . $newDatabaseInfo['host'] . ';dbname=' . $newDatabaseInfo['name'], $newDatabaseInfo['user'], $newDatabaseInfo['pass']);
                     break;
                 case 'mdb':
                     //MS Access
@@ -103,8 +97,7 @@ class cPDO {
 
     function read() {
         try {
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE,
-                    PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->result = $this->connection->prepare($this->sql);
             $this->result->execute();
             //TODO Fix for all db's
