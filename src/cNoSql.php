@@ -94,6 +94,7 @@ class cNoSql {
     }
 
     public function addOffset($offset) {
+
         $this->dbObj->addOffset($offset);
         return $this;
 

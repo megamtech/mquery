@@ -86,9 +86,11 @@ class cMongo {
             $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
 
             if ($this->orderby) {
+
                 $this->cursor = $this->cursor->sort($this->orderby);
             }
             if ($this->limit) {
+
                 $this->cursor = $this->cursor->limit($this->limit);
             }
             if ($this->offset) {
@@ -289,8 +291,7 @@ class cMongo {
     }
 
     public function addOffset($offset) {
-
-        $this->offset_by = $offset;
+        $this->offset = $offset;
         return $this;
 
     }
