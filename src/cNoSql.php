@@ -62,6 +62,12 @@ class cNoSql {
 
     }
 
+    function drop() {
+        $this->__setValues();
+        return $this->dbObj->drop();
+
+    }
+
     function createTable() {
         $this->__setValues();
         return $this->dbObj->createTable();

@@ -21,13 +21,11 @@ Class cDatabase implements cModel {
     public $column;
 
     public function __construct($newDatabaseInfo = array()) {
-
         if (!$this->dbObj) {
 
             if ($newDatabaseInfo['type'] == 'mongo') {
 
                 require_once 'cNoSql.php';
-
                 $this->dbObj = new cNoSql($newDatabaseInfo);
             } else {
                 require_once 'cSql.php';
@@ -74,6 +72,12 @@ Class cDatabase implements cModel {
     public function delete() {
         $this->dbObj->table = $this->table;
         return $this->dbObj->delete();
+
+    }
+
+    public function drop() {
+        $this->dbObj->table = $this->table;
+        return $this->dbObj->drop();
 
     }
 

@@ -80,6 +80,16 @@ class cMongo {
 
     }
 
+    public function drop() {
+        try {
+            //$this->resetDefaults();
+            return $this->db->{$this->table}->drop();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+    }
+
     public function read() {
         try {
 
