@@ -27,4 +27,6 @@ interface cModel {
     public function addOffset($offset);
 
     public function addWhereCondition($condition);
+    
+    public function addGroupBy($groupby);
 }

@@ -92,6 +92,10 @@ class cNoSql {
         return $this;
 
     }
+    public function addGroupBy($groupby) {
+        $this->dbObj->addGroupBy($groupby);
+        return $this;
+   }
 
     public function addLimit($limit) {
         $this->dbObj->addLimit($limit);

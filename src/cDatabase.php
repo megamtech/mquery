@@ -112,6 +112,10 @@ Class cDatabase implements cModel {
 
     }
 
+    public function addGroupBy($groupby) {
+        $this->dbObj->addGroupBy($groupby);
+        return $this;
+    }
     public function addWhereCondition($condition = array()) {
         $this->dbObj->addWhereCondition($condition);
         return $this;
