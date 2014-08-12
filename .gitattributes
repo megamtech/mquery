@@ -1,4 +1,9 @@
 * text=auto !eol
+/cDatabase.php -text
+/cMongo.php -text
+/cMysql.php -text
+/cNoSql.php -text
+/cSql.php -text
 docs/404.html -text
 docs/404.min.html -text
 docs/class-cDatabase.html -text
