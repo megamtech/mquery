@@ -129,7 +129,7 @@ class cMongo {
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
-            echo $e->getTrace();
+            //echo $e->getTrace();
             return $e->getMessage();
         }
     }
@@ -195,13 +195,32 @@ class cMongo {
 
                             $tempcondition[$columnname] = $values;
                         }
-                        
                     } else {
 
                         $tempcondition[$columnname] = $values;
                     }
                 } else {
 //TODO  Yet to implement Array of conditions
+
+                    if ($columnname == '&ORARRAY') {
+                        foreach ($values as $column => $value) {
+                            if(is_array($value)){
+                                $tempcondition['$or'][] = $this->createFilterCondition($column, $value['type'], $value['values'], $value['dbtype']);
+                            }else{
+                                $tempcondition['$or'][] = array($column=>$value);
+                            }
+                                
+                            
+                        }
+                    } elseif ($columnname == '&ANDARRAY') {
+                        
+                            if(is_array($value)){
+                                $tempcondition['$and'][] = $this->createFilterCondition($column, $value['type'], $value['values'], $value['dbtype']);
+                            }else{
+                                $tempcondition['$and'][] = array($column=>$value);
+                            }
+                        
+                    }
                 }
             }
         }
