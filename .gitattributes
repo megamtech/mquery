@@ -63,6 +63,7 @@ src/cMysql.php -text
 src/cNoSql.php -text
 src/cPDO.php -text
 src/cSql.php -text
+src/properties.php -text
 tests/src/cDatabaseTest.php -text
 tests/src/cMongoTest.php -text
 tests/src/cMysqlTest.php -text

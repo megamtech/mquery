@@ -10,6 +10,7 @@
  *
  * @author Admin
  */
+include 'properties.php';
 interface cModel {
 
     public function create();
