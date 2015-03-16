@@ -60,6 +60,14 @@ Class cDatabase implements cModel {
         return $this->dbObj->count();
 
     }
+    public function distinct() {
+        $this->dbObj->table = $this->table;
+        
+        $this->dbObj->column = $this->column;
+
+        return $this->dbObj->distinct();
+
+    }
 
     public function read() {
         $this->dbObj->table = $this->table;

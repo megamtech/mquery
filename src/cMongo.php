@@ -180,6 +180,16 @@ class cMongo {
             return $e->getMessage();
         }
     }
+    public function distinct() {
+        try {
+            $this->logger(__FUNCTION__,"debug");
+            //For distinct we can use only one column @ this time 
+            return $this->db->{$this->table}->distinct($this->column[0],$this->condition);
+        } catch (Exception $e) {
+            $this->logger(__FUNCTION__,"error",$e);
+            return $e->getMessage();
+        }
+    }
 
     public function createTable() {
         $this->logger(__FUNCTION__,"debug");

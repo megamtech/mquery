@@ -55,6 +55,11 @@ class cNoSql {
         return $this->dbObj->count();
 
     }
+    function distinct() {
+        $this->__setValues();
+        return $this->dbObj->distinct();
+
+    }
 
     function delete() {
         $this->__setValues();
