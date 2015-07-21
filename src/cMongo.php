@@ -38,6 +38,7 @@ class cMongo {
 
     public function __construct($newDatabaseInfo) {
         $this->getConnection($newDatabaseInfo);
+
     }
 
     public function getConnection($newDatabaseInfo) {
@@ -49,8 +50,9 @@ class cMongo {
             $this->db = $this->connection->{$newDatabaseInfo['name']};
             $this->mLogger = new cMLogger();
         }
+
     }
-    
+
     private function logger($functionname, $type = 'debug', $exception = null) {
         $message = array("Function" => $functionname,
             " Table " => $this->table,
@@ -58,20 +60,19 @@ class cMongo {
             "Condition" => json_encode($this->condition),
             "Orderby" => json_encode($this->orderby),
             "Limit" => json_encode($this->limit),
-            "Offset" => json_encode($this->offset)     
+            "Offset" => json_encode($this->offset)
         );
         if ($type == 'error') {
-            $exception=array("Error Message" => $exception->getMessage(),
-            "Error Code" => $exception->getCode(),
-            "Error File" => $exception->getFile(),
-            "Error Trace" => $exception->getTraceAsString(),
+            $exception = array("Error Message" => $exception->getMessage(),
+                "Error Code" => $exception->getCode(),
+                "Error File" => $exception->getFile(),
+                "Error Trace" => $exception->getTraceAsString(),
             );
             $this->mLogger->error(array_merge($message, $exception));
-        }else{
+        } else {
             $this->mLogger->debug($message);
         }
 
-        
     }
 
     public function create() {
@@ -80,26 +81,29 @@ class cMongo {
             if ($seq != '') {
                 $this->column['_id'] = $this->getNextSequence();
             }
-            $this->db->{$this->table}->insert($this->column, array('fsync' => TRUE));
+            $this->db->{$this->table}->insert($this->column,
+                    array('fsync' => TRUE));
             $this->result = $this->column['_id'];
-            $this->logger(__FUNCTION__,"debug");
+            $this->logger(__FUNCTION__, "debug");
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__,"error",$e);
+            $this->logger(__FUNCTION__, "error", $e);
             return $e->getMessage();
         }
+
     }
 
     public function delete() {
         try {
             //$this->resetDefaults();
-            $this->logger(__FUNCTION__,"debug");
+            $this->logger(__FUNCTION__, "debug");
             return $this->db->{$this->table}->remove($this->condition);
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__,"error",$e);
+            $this->logger(__FUNCTION__, "error", $e);
             return $e->getMessage();
         }
+
     }
 
     public function drop() {
@@ -107,9 +111,10 @@ class cMongo {
             //$this->resetDefaults();
             return $this->db->{$this->table}->drop();
         } catch (Exception $e) {
-        $this->logger(__FUNCTION__,"error",$e);
+            $this->logger(__FUNCTION__, "error", $e);
             return $e->getMessage();
         }
+
     }
 
     public function read() {
@@ -126,7 +131,8 @@ class cMongo {
                 //$this->group_by[1] == Initial values to be returned
                 //$this->group_by[2] == Javascript function to reduce the array
 
-                $this->cursor = $this->db->{$this->table}->group($this->group_by[0], $this->group_by[1], $this->group_by[2], $options);
+                $this->cursor = $this->db->{$this->table}->group($this->group_by[0],
+                        $this->group_by[1], $this->group_by[2], $options);
                 $this->result = $this->cursor['retval'];
             } else {
                 if ($this->column == "") {
@@ -134,7 +140,9 @@ class cMongo {
                 }
                 if (!is_array($this->condition))
                     $this->condition = array();
-                $this->cursor = $this->db->{$this->table}->find($this->condition, $this->column);
+
+                $this->cursor = $this->db->{$this->table}->find($this->condition,
+                        $this->column);
 
                 if ($this->orderby) {
 
@@ -151,34 +159,40 @@ class cMongo {
                     $this->result[] = $doc;
                 }
             }
-            $this->logger(__FUNCTION__,"debug");
+            $this->logger(__FUNCTION__, "debug");
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__,"error",$e);
+            $this->logger(__FUNCTION__, "error", $e);
             return $e->getMessages();
         }
+
     }
 
     public function update() {
         try {
-            return $this->db->{$this->table}->update($this->condition, array('$set' => $this->column), array('multiple' => true));
-            $this->logger(__FUNCTION__,"debug");
+            return $this->db->{$this->table}->update($this->condition,
+                            array('$set' => $this->column),
+                            array('multiple' => true));
+            $this->logger(__FUNCTION__, "debug");
             $this->resetDefaults();
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__,"error",$e);
+            $this->logger(__FUNCTION__, "error", $e);
             return $e->getMessage();
         }
+
     }
 
     public function count() {
         try {
-            $this->logger(__FUNCTION__,"debug");
-            return $this->db->{$this->table}->count($this->condition, $this->limit, $this->offset);
+            $this->logger(__FUNCTION__, "debug");
+            return $this->db->{$this->table}->count($this->condition,
+                            $this->limit, $this->offset);
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__,"error",$e);
+            $this->logger(__FUNCTION__, "error", $e);
             return $e->getMessage();
         }
+
     }
     public function distinct() {
         try {
@@ -192,17 +206,19 @@ class cMongo {
     }
 
     public function createTable() {
-        $this->logger(__FUNCTION__,"debug");
+        $this->logger(__FUNCTION__, "debug");
         return $this->db->createCollection($this->table);
+
     }
 
     public function createMultiple() {
-        $this->logger(__FUNCTION__,"debug");
+        $this->logger(__FUNCTION__, "debug");
         $this->result = $this->db->{$this->table}->batchInsert($this->column);
         foreach ($this->result as $value) {
             $result[] = $value['id'];
         }
         return $result;
+
     }
 
     /**
@@ -227,9 +243,13 @@ class cMongo {
 
                     if (is_array($values)) {
                         if ($values['optype'] == '&OR') {
-                            $tempcondition['$or'][] = $this->createFilterCondition($columnname, $values['type'], $values['values'], $values['dbtype']);
+                            $tempcondition['$or'][] = $this->createFilterCondition($columnname,
+                                    $values['type'], $values['values'],
+                                    $values['dbtype']);
                         } elseif ($values['optype'] == '&AND') {
-                            $tempcondition['$and'][] = $this->createFilterCondition($columnname, $values['type'], $values['values'], $values['dbtype']);
+                            $tempcondition['$and'][] = $this->createFilterCondition($columnname,
+                                    $values['type'], $values['values'],
+                                    $values['dbtype']);
                         } else {
 
                             $tempcondition[$columnname] = $values;
@@ -243,8 +263,10 @@ class cMongo {
 
                     if ($columnname == '&ORARRAY') {
                         foreach ($values as $column => $value) {
-                            if(is_array($value)) {
-                                $tempcondition['$or'][] = $this->createFilterCondition($column, $value['type'], $value['values'], $value['dbtype']);
+                            if (is_array($value)) {
+                                $tempcondition['$or'][] = $this->createFilterCondition($column,
+                                        $value['type'], $value['values'],
+                                        $value['dbtype']);
                             } else {
                                 $tempcondition['$or'][] = array($column => $value);
                             }
@@ -252,7 +274,9 @@ class cMongo {
                     } elseif ($columnname == '&ANDARRAY') {
 
                         if (is_array($value)) {
-                            $tempcondition['$and'][] = $this->createFilterCondition($column, $value['type'], $value['values'], $value['dbtype']);
+                            $tempcondition['$and'][] = $this->createFilterCondition($column,
+                                    $value['type'], $value['values'],
+                                    $value['dbtype']);
                         } else {
                             $tempcondition['$and'][] = array($column => $value);
                         }
@@ -263,6 +287,7 @@ class cMongo {
 
         $this->condition = $tempcondition;
         return $this;
+
     }
 
     function addOrderBy($orderby) {
@@ -272,6 +297,7 @@ class cMongo {
             }
         }
         return $this;
+
     }
 
     private function createFilterCondition($column, $type, $value, $dbtype) {
@@ -281,41 +307,53 @@ class cMongo {
                 $return[$column]['$lt'] = $this->changeDataType($dbtype, $value);
                 break;
             case '&!lt':
-                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype, $value);
+                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype,
+                        $value);
                 break;
             case '&gt':
                 $return[$column]['$gt'] = $this->changeDataType($dbtype, $value);
                 break;
             case '&!gt':
-                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype, $value);
+                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype,
+                        $value);
                 break;
             case '&starts':
-                $return[$column]['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype, $value) . "/i");
+                $return[$column]['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype,
+                                $value) . "/i");
                 break;
             case '&!starts':
-                $return[$column]['$not']['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype, $value) . "/i");
+                $return[$column]['$not']['$regex'] = new MongoRegex("/^" . $this->changeDataType($dbtype,
+                                $value) . "/i");
 
                 break;
             case '&ends':
-                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "$/i");
+                $return[$column]['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
+                                $value) . "$/i");
                 break;
             case '&!ends':
-                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "$/i");
+                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
+                                $value) . "$/i");
                 break;
             case '&contains':
-                $return[$column]['$regex'] = new MongoRegex('/^' . $this->changeDataType($dbtype, $value) . '/i');
+                $return[$column]['$regex'] = new MongoRegex('/^' . $this->changeDataType($dbtype,
+                                $value) . '/i');
                 break;
             case '&!contains':
-                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype, $value) . "/i");
+                $return[$column]['$not']['$regex'] = new MongoRegex("/" . $this->changeDataType($dbtype,
+                                $value) . "/i");
 
                 break;
             case '&between':
-                $return[$column]['$lt'] = $this->changeDataType($dbtype, $value[0]);
-                $return[$column]['$gt'] = $this->changeDataType($dbtype, $value[1]);
+                $return[$column]['$lt'] = $this->changeDataType($dbtype,
+                        $value[0]);
+                $return[$column]['$gt'] = $this->changeDataType($dbtype,
+                        $value[1]);
             case '&!between':
 
-                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype, $value[0]);
-                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype, $value[1]);
+                $return[$column]['$not']['$lt'] = $this->changeDataType($dbtype,
+                        $value[0]);
+                $return[$column]['$not']['$gt'] = $this->changeDataType($dbtype,
+                        $value[1]);
                 break;
             case '&empty':
                 $return[$column] = null;
@@ -326,12 +364,14 @@ class cMongo {
                 break;
             case '&in':
                 foreach ($value as $individual_value) {
-                    $return[$column]['$in'][] = $this->changeDataType($dbtype, $individual_value);
+                    $return[$column]['$in'][] = $this->changeDataType($dbtype,
+                            $individual_value);
                 }
                 break;
             case '&!in':
                 foreach ($value as $individual_value) {
-                    $return[$column]['$nin'] = $this->changeDataType($dbtype, $individual_value);
+                    $return[$column]['$nin'] = $this->changeDataType($dbtype,
+                            $individual_value);
                 }
                 break;
             case '&!eq':
@@ -344,6 +384,7 @@ class cMongo {
                 break;
         }
         return $return;
+
     }
 
     private function changeDataType($type, $value) {
@@ -366,31 +407,39 @@ class cMongo {
                 break;
         }
         return $result;
+
     }
 
     public function addLimit($limit) {
         $this->limit = $limit;
         return $this;
+
     }
 
     public function addOffset($offset) {
         $this->offset = $offset;
         return $this;
+
     }
 
     public function addGroupBy($groupby) {
         $this->group_by = $groupby;
         return $this;
+
     }
 
     private function getNextSequence() {
-        $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"), array('$inc' => array("seq" => 1)));
+        $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"),
+                array('$inc' => array("seq" => 1)));
         return $result['seq'];
+
     }
 
     private function resetDefaults() {
         unset(
-                $this->table, $this->condition, $this->column, $this->offset, $this->orderby);
+                $this->table, $this->condition, $this->column, $this->offset,
+                $this->orderby);
+
     }
 
 }
