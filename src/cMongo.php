@@ -15,7 +15,7 @@
  *
  *
  */
-include AppLoggerModule . 'cMLogger.php';
+//include AppLoggerModule . 'cMLogger.php';
 
 class cMongo {
 
@@ -48,7 +48,7 @@ class cMongo {
             }
             $this->connection = new MongoClient('mongodb://' . $dbCredencials . $newDatabaseInfo['host'] . ':' . $newDatabaseInfo['port'] . '/' . $newDatabaseInfo['name']);
             $this->db = $this->connection->{$newDatabaseInfo['name']};
-            $this->mLogger = new cMLogger();
+//            $this->mLogger = new cMLogger();
         }
 
     }
@@ -84,11 +84,11 @@ class cMongo {
             $this->db->{$this->table}->insert($this->column,
                     array('fsync' => TRUE));
             $this->result = $this->column['_id'];
-            $this->logger(__FUNCTION__, "debug");
+//            $this->logger(__FUNCTION__,"debug");
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__, "error", $e);
+//            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
         }
 
@@ -97,12 +97,34 @@ class cMongo {
     public function delete() {
         try {
             //$this->resetDefaults();
-            $this->logger(__FUNCTION__, "debug");
+//            $this->logger(__FUNCTION__,"debug");
             return $this->db->{$this->table}->remove($this->condition);
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__, "error", $e);
+//            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
         }
+
+    }
+
+    public function aggregate() {
+
+//        print_r($this->column);
+//        exit;
+//        $adminDB = $this->connection->admin; //require admin priviledge
+//
+//        $mongodb_info = $adminDB->command(array('buildinfo' => true));
+//        $mongodb_version = $mongodb_info['version'];
+//
+//        print_r($mongodb_info);
+        $this->cursor = $this->db->{$this->table}->aggregateCursor($this->column,
+                array('allowDiskUse' => true));
+        foreach ($this->cursor as $doc) {
+            $this->result[] = $doc;
+        }
+
+
+        $this->resetDefaults();
+        return $this->result;
 
     }
 
@@ -111,7 +133,7 @@ class cMongo {
             //$this->resetDefaults();
             return $this->db->{$this->table}->drop();
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__, "error", $e);
+//        $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
         }
 
@@ -140,7 +162,6 @@ class cMongo {
                 }
                 if (!is_array($this->condition))
                     $this->condition = array();
-
                 $this->cursor = $this->db->{$this->table}->find($this->condition,
                         $this->column);
 
@@ -159,12 +180,12 @@ class cMongo {
                     $this->result[] = $doc;
                 }
             }
-            $this->logger(__FUNCTION__, "debug");
+//            $this->logger(__FUNCTION__,"debug");
             $this->resetDefaults();
             return $this->result;
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__, "error", $e);
-            return $e->getMessages();
+//            $this->logger(__FUNCTION__,"error",$e);
+            return $e->getMessage();
         }
 
     }
@@ -174,10 +195,10 @@ class cMongo {
             return $this->db->{$this->table}->update($this->condition,
                             array('$set' => $this->column),
                             array('multiple' => true));
-            $this->logger(__FUNCTION__, "debug");
+//            $this->logger(__FUNCTION__,"debug");
             $this->resetDefaults();
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__, "error", $e);
+//            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
         }
 
@@ -185,34 +206,37 @@ class cMongo {
 
     public function count() {
         try {
-            $this->logger(__FUNCTION__, "debug");
+//            $this->logger(__FUNCTION__,"debug");
             return $this->db->{$this->table}->count($this->condition,
                             $this->limit, $this->offset);
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__, "error", $e);
+//            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
         }
 
     }
+
     public function distinct() {
         try {
-            $this->logger(__FUNCTION__,"debug");
-            //For distinct we can use only one column @ this time 
-            return $this->db->{$this->table}->distinct($this->column[0],$this->condition);
+//            $this->logger(__FUNCTION__,"debug");
+            //For distinct we can use only one column @ this time
+            return $this->db->{$this->table}->distinct($this->column[0],
+                            $this->condition);
         } catch (Exception $e) {
-            $this->logger(__FUNCTION__,"error",$e);
+//            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
         }
+
     }
 
     public function createTable() {
-        $this->logger(__FUNCTION__, "debug");
+//        $this->logger(__FUNCTION__,"debug");
         return $this->db->createCollection($this->table);
 
     }
 
     public function createMultiple() {
-        $this->logger(__FUNCTION__, "debug");
+//        $this->logger(__FUNCTION__,"debug");
         $this->result = $this->db->{$this->table}->batchInsert($this->column);
         foreach ($this->result as $value) {
             $result[] = $value['id'];
@@ -436,8 +460,7 @@ class cMongo {
     }
 
     private function resetDefaults() {
-        unset(
-                $this->table, $this->condition, $this->column, $this->offset,
+        unset($this->table, $this->condition, $this->column, $this->offset,
                 $this->orderby);
 
     }

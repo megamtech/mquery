@@ -33,7 +33,6 @@ Class cDatabase implements cModel {
                 $this->dbObj = new cSql($newDatabaseInfo);
             }
         }
-
     }
 
     public function create() {
@@ -42,7 +41,6 @@ Class cDatabase implements cModel {
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->create();
-
     }
 
     public function update() {
@@ -50,7 +48,6 @@ Class cDatabase implements cModel {
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->update();
-
     }
 
     public function count() {
@@ -58,15 +55,14 @@ Class cDatabase implements cModel {
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->count();
-
     }
+
     public function distinct() {
         $this->dbObj->table = $this->table;
-        
+
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->distinct();
-
     }
 
     public function read() {
@@ -74,60 +70,58 @@ Class cDatabase implements cModel {
         $this->dbObj->column = $this->column;
 
         return $this->dbObj->read();
-
     }
 
     public function delete() {
         $this->dbObj->table = $this->table;
         return $this->dbObj->delete();
-
     }
 
     public function drop() {
         $this->dbObj->table = $this->table;
         return $this->dbObj->drop();
+    }
 
+    public function aggregate() {
+        $this->dbObj->table = $this->table;
+        $this->dbObj->column = $this->column;
+        return $this->dbObj->aggregate();
     }
 
     function createTable() {
         $this->dbObj->table = $this->table;
         return $this->dbObj->createTable();
-
     }
 
     function createMultiple() {
         $this->dbObj->table = $this->table;
         $this->dbObj->column = $this->column;
         return $this->dbObj->createMultiple();
-
     }
 
     public function addOrderBy($orderby) {
         $this->dbObj->addOrderBy($orderby);
         return $this;
-
     }
 
     public function addLimit($limit) {
         $this->dbObj->addLimit($limit);
         return $this;
-
     }
 
     public function addOffset($offset) {
         $this->dbObj->addOffset($offset);
         return $this;
-
     }
 
     public function addGroupBy($groupby) {
         $this->dbObj->addGroupBy($groupby);
         return $this;
     }
+
     public function addWhereCondition($condition = array()) {
         $this->dbObj->addWhereCondition($condition);
         return $this;
-
     }
 
 }

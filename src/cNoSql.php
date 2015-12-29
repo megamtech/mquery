@@ -37,6 +37,11 @@ class cNoSql {
         return $this->dbObj->read();
 
     }
+    function aggregate() {
+        $this->__setValues();
+        return $this->dbObj->aggregate();
+
+    }
 
     function create() {
         $this->__setValues();
