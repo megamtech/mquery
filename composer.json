@@ -1,0 +1,18 @@
+{
+    "name": "megamtech/mquery",
+    "type": "ORM-PHP",
+    "description": "Fastest and Slim ORM Library for MongoDB,Mysql,PostgreSQL and PDO. Supports create/add,edit,delete and select",
+    "keywords": ["orm","php", "megamtech", "mquery"],
+    "homepage": "https://github.com/megamtech/mquery/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Megam Technologies LLP",
+            "email": "dev@megamtech.com",
+            "homepage": "http://megamtech.com/",
+                   }
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    } 
+}
