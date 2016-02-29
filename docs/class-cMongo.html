@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="generator" content="ApiGen 2.8.0" />
+	<meta charset="utf-8">
 
 	<title>Class cMongo | mquery</title>
 
-	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
-	<script type="text/javascript" src="elementlist.js?899320698"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
 </head>
 
@@ -30,6 +27,7 @@
 				<li class="active"><a href="class-cMongo.html">cMongo</a></li>
 				<li><a href="class-cMysql.html">cMysql</a></li>
 				<li><a href="class-cNoSql.html">cNoSql</a></li>
+				<li><a href="class-cPDO.html">cPDO</a></li>
 				<li><a href="class-cSql.html">cSql</a></li>
 			</ul>
 
@@ -50,10 +48,9 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="" />
-		<input type="hidden" name="ie" value="UTF-8" />
-		<input type="text" name="q" class="text" />
-		<input type="submit" value="Search" />
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
 	</form>
 
 	<div id="navigation">
@@ -68,9 +65,6 @@
 			<li>
 				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
 			</li>
-			<li>
-				<a href="todo.html" title="Todo list"><span>Todo</span></a>
-			</li>
 		</ul>
 		<ul>
 		</ul>
@@ -80,14 +74,6 @@
 	<h1>Class cMongo</h1>
 
 
-	<div class="description">
-	
-<p>This Class is for MongoDB related operations like connect ,
-create,update,read and remove/delete</p>
-
-<p>In this class we have the functions @todo Long Desc</p>
-
-	</div>
 
 
 
@@ -103,27 +89,19 @@ create,update,read and remove/delete</p>
 		
 		
 
-				<b>Example:</b>
-				<br />
-$obj=new Obj(); <em>This is automatically called from cDatabase,Singleton obj so
-it will connect if the connection is not available<br />
-$obj-&gt;read();</em>Will by default perform sort,limit,offset if the attribs
-are present<br />
-$obj-&gt;update();<br />
-$obj-&gt;create();<br />
-$obj-&gt;remove();<br />
-<br />
-		<b>Located at</b> <a href="source-class-cMongo.html#3-89" title="Go to source code">cMongo.php</a><br />
+			<b>Located at</b> <a href="source-class-cMongo.html#20-468" title="Go to source code">cMongo.php</a>
+		<br>
 	</div>
 
 
 
-	<table class="summary" id="methods">
+	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
 	<tr data-order="__construct" id="___construct">
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -131,7 +109,7 @@ $obj-&gt;remove();<br />
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-cMongo.html#33-39" title="Go to source code">__construct</a>( <span>mixed <var>$newDatabaseInfo</var></span> )</code>
+		<code><a href="source-class-cMongo.html#39-42" title="Go to source code">__construct</a>( <span> <var>$newDatabaseInfo</var></span> )</code>
 
 		<div class="description short">
 			
@@ -144,10 +122,6 @@ $obj-&gt;remove();<br />
 
 
 
-				<h4>Var</h4>
-				<div class="list">
-						Mixed<br />
-				</div>
 
 
 		</div>
@@ -157,6 +131,7 @@ $obj-&gt;remove();<br />
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -164,7 +139,7 @@ $obj-&gt;remove();<br />
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getConnection">#</a>
-		<code><a href="source-class-cMongo.html#41-46" title="Go to source code">getConnection</a>( <span>mixed <var>$newDatabaseInfo</var></span> )</code>
+		<code><a href="source-class-cMongo.html#44-54" title="Go to source code">getConnection</a>( <span> <var>$newDatabaseInfo</var></span> )</code>
 
 		<div class="description short">
 			
@@ -186,6 +161,7 @@ $obj-&gt;remove();<br />
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -193,7 +169,7 @@ $obj-&gt;remove();<br />
 
 		<td class="name"><div>
 		<a class="anchor" href="#_create">#</a>
-		<code><a href="source-class-cMongo.html#48-50" title="Go to source code">create</a>( )</code>
+		<code><a href="source-class-cMongo.html#78-95" title="Go to source code">create</a>( )</code>
 
 		<div class="description short">
 			
@@ -215,6 +191,7 @@ $obj-&gt;remove();<br />
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -222,7 +199,67 @@ $obj-&gt;remove();<br />
 
 		<td class="name"><div>
 		<a class="anchor" href="#_delete">#</a>
-		<code><a href="source-class-cMongo.html#52-54" title="Go to source code">delete</a>( )</code>
+		<code><a href="source-class-cMongo.html#97-107" title="Go to source code">delete</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="aggregate" id="_aggregate">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_aggregate">#</a>
+		<code><a href="source-class-cMongo.html#109-129" title="Go to source code">aggregate</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="drop" id="_drop">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_drop">#</a>
+		<code><a href="source-class-cMongo.html#131-140" title="Go to source code">drop</a>( )</code>
 
 		<div class="description short">
 			
@@ -244,6 +281,7 @@ $obj-&gt;remove();<br />
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -251,7 +289,7 @@ $obj-&gt;remove();<br />
 
 		<td class="name"><div>
 		<a class="anchor" href="#_read">#</a>
-		<code><a href="source-class-cMongo.html#56-77" title="Go to source code">read</a>( )</code>
+		<code><a href="source-class-cMongo.html#142-191" title="Go to source code">read</a>( )</code>
 
 		<div class="description short">
 			
@@ -273,6 +311,7 @@ $obj-&gt;remove();<br />
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -280,7 +319,127 @@ $obj-&gt;remove();<br />
 
 		<td class="name"><div>
 		<a class="anchor" href="#_update">#</a>
-		<code><a href="source-class-cMongo.html#79-82" title="Go to source code">update</a>( )</code>
+		<code><a href="source-class-cMongo.html#193-205" title="Go to source code">update</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="count" id="_count">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_count">#</a>
+		<code><a href="source-class-cMongo.html#207-217" title="Go to source code">count</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="distinct" id="_distinct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_distinct">#</a>
+		<code><a href="source-class-cMongo.html#219-230" title="Go to source code">distinct</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="createTable" id="_createTable">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createTable">#</a>
+		<code><a href="source-class-cMongo.html#232-236" title="Go to source code">createTable</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="createMultiple" id="_createMultiple">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createMultiple">#</a>
+		<code><a href="source-class-cMongo.html#238-246" title="Go to source code">createMultiple</a>( )</code>
 
 		<div class="description short">
 			
@@ -302,14 +461,151 @@ $obj-&gt;remove();<br />
 
 		<td class="attributes"><code>
 			 public 
-			
+
+			<code><a href="class-cMongo.html">cMongo</a></code>
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addWhereCondition">#</a>
-		<code><a href="source-class-cMongo.html#84-87" title="Go to source code">addWhereCondition</a>( <span>mixed <var>$condition</var></span> )</code>
+		<code><a href="source-class-cMongo.html#248-315" title="Go to source code">addWhereCondition</a>( <span>type <var>$condition</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$condition</var></dt>
+					<dd><p>$condition= array(</p>
+
+<p>columnname,&amp;ANDARRAY,&amp;ORARRAY=>Array(
+'values'=>array(1,2,n),string| ~~~Mandatory ~~~default string
+* 'type'=>'&amp;lt',&amp;gt,&amp;starts,&amp;ends,&amp;contains,&amp;eq,&amp;between,&amp;!eq,&amp;!like,&amp;notbetween,&amp;!contains,&amp;!startswith,&amp;!endwith,&amp;empty,&amp;!empty,&amp;in,&amp;!in| ~~~ Optional ~~~ default &amp;eq
+,dbtype=>|string,int,number,date~~Optional ~~~ default string
+'optype'=>'&amp;AND',&amp;OR | ~~~ Optional ~~~ Default AND
+))</p></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-cMongo.html">cMongo</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addOrderBy" id="_addOrderBy">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addOrderBy">#</a>
+		<code><a href="source-class-cMongo.html#317-325" title="Go to source code">addOrderBy</a>( <span> <var>$orderby</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addLimit" id="_addLimit">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addLimit">#</a>
+		<code><a href="source-class-cMongo.html#437-441" title="Go to source code">addLimit</a>( <span> <var>$limit</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addOffset" id="_addOffset">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addOffset">#</a>
+		<code><a href="source-class-cMongo.html#443-447" title="Go to source code">addOffset</a>( <span> <var>$offset</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addGroupBy" id="_addGroupBy">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addGroupBy">#</a>
+		<code><a href="source-class-cMongo.html#449-453" title="Go to source code">addGroupBy</a>( <span> <var>$groupby</var></span> )</code>
 
 		<div class="description short">
 			
@@ -340,20 +636,16 @@ $obj-&gt;remove();<br />
 
 
 
-	<table class="summary" id="properties">
+	<table class="summary properties" id="properties">
 	<caption>Properties summary</caption>
 	<tr data-order="connection" id="$connection">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#19" title="Go to source code"><var>$connection</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$connection" class="anchor">#</a>
+				<a href="source-class-cMongo.html#22" title="Go to source code"><var>$connection</var></a>
 
 			<div class="description short">
 				
@@ -363,20 +655,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$connection" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="table" id="$table">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#21" title="Go to source code"><var>$table</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$table" class="anchor">#</a>
+				<a href="source-class-cMongo.html#24" title="Go to source code"><var>$table</var></a>
 
 			<div class="description short">
 				
@@ -386,20 +680,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$table" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="condition" id="$condition">
 		<td class="attributes"><code>
-			private  
-			mixed
+			public  
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#22" title="Go to source code"><var>$condition</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$condition" class="anchor">#</a>
+				<a href="source-class-cMongo.html#25" title="Go to source code"><var>$condition</var></a>
 
 			<div class="description short">
 				
@@ -409,20 +705,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$condition" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="column" id="$column">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#24" title="Go to source code"><var>$column</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$column" class="anchor">#</a>
+				<a href="source-class-cMongo.html#27" title="Go to source code"><var>$column</var></a>
 
 			<div class="description short">
 				
@@ -432,20 +730,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$column" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="db" id="$db">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#26" title="Go to source code"><var>$db</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$db" class="anchor">#</a>
+				<a href="source-class-cMongo.html#29" title="Go to source code"><var>$db</var></a>
 
 			<div class="description short">
 				
@@ -455,20 +755,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$db" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="orderby" id="$orderby">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#27" title="Go to source code"><var>$orderby</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$orderby" class="anchor">#</a>
+				<a href="source-class-cMongo.html#30" title="Go to source code"><var>$orderby</var></a>
 
 			<div class="description short">
 				
@@ -478,20 +780,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$orderby" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="limit" id="$limit">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#28" title="Go to source code"><var>$limit</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$limit" class="anchor">#</a>
+				<a href="source-class-cMongo.html#31" title="Go to source code"><var>$limit</var></a>
 
 			<div class="description short">
 				
@@ -501,20 +805,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$limit" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="offset" id="$offset">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#29" title="Go to source code"><var>$offset</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$offset" class="anchor">#</a>
+				<a href="source-class-cMongo.html#32" title="Go to source code"><var>$offset</var></a>
 
 			<div class="description short">
 				
@@ -524,20 +830,47 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$offset" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="group_by" id="$group_by">
+		<td class="attributes"><code>
+			public  
+			
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-cMongo.html#33" title="Go to source code"><var>$group_by</var></a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$group_by" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="result" id="$result">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#30" title="Go to source code"><var>$result</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$result" class="anchor">#</a>
+				<a href="source-class-cMongo.html#34" title="Go to source code"><var>$result</var></a>
 
 			<div class="description short">
 				
@@ -547,20 +880,22 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$result" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
-	<tr data-order="cursor" id="$cursor">
+	<tr data-order="returnType" id="$returnType">
 		<td class="attributes"><code>
-			private  
-			mixed
+			public  
+			string
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cMongo.html#31" title="Go to source code"><var>$cursor</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$cursor" class="anchor">#</a>
+				<a href="source-class-cMongo.html#36" title="Go to source code"><var>$returnType</var></a>
 
 			<div class="description short">
 				
@@ -570,7 +905,13 @@ $obj-&gt;remove();<br />
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$returnType" class="anchor">#</a>
+				<code><span class="php-quote">&quot;json&quot;</span></code>
+			</div>
+		</td>
 	</tr>
 	</table>
 
@@ -582,9 +923,11 @@ $obj-&gt;remove();<br />
 </div>
 
 	<div id="footer">
-		mquery API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+		mquery API documentation generated by <a href="http://apigen.org">ApiGen</a>
 	</div>
 </div>
 </div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
 </body>
 </html>

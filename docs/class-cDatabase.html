@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="generator" content="ApiGen 2.8.0" />
+	<meta charset="utf-8">
 
 	<title>Class cDatabase | mquery</title>
 
-	<script type="text/javascript" src="resources/combined.js?3715972085"></script>
-	<script type="text/javascript" src="elementlist.js?899320698"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
 
 </head>
 
@@ -30,6 +27,7 @@
 				<li><a href="class-cMongo.html">cMongo</a></li>
 				<li><a href="class-cMysql.html">cMysql</a></li>
 				<li><a href="class-cNoSql.html">cNoSql</a></li>
+				<li><a href="class-cPDO.html">cPDO</a></li>
 				<li><a href="class-cSql.html">cSql</a></li>
 			</ul>
 
@@ -50,10 +48,9 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="" />
-		<input type="hidden" name="ie" value="UTF-8" />
-		<input type="text" name="q" class="text" />
-		<input type="submit" value="Search" />
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
 	</form>
 
 	<div id="navigation">
@@ -67,9 +64,6 @@
 		<ul>
 			<li>
 				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
-			</li>
-			<li>
-				<a href="todo.html" title="Todo list"><span>Todo</span></a>
 			</li>
 		</ul>
 		<ul>
@@ -105,18 +99,20 @@
 		
 
 				<b>Author:</b>
-				Admin<br />
-		<b>Located at</b> <a href="source-class-cDatabase.html#15-88" title="Go to source code">cDatabase.php</a><br />
+				gt<br>
+			<b>Located at</b> <a href="source-class-cDatabase.html#15-127" title="Go to source code">cDatabase.php</a>
+		<br>
 	</div>
 
 
 
-	<table class="summary" id="methods">
+	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
 	<tr data-order="__construct" id="___construct">
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -124,7 +120,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-cDatabase.html#23-48" title="Go to source code">__construct</a>( <span>mixed <var>$newDatabaseInfo</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-cDatabase.html#23-36" title="Go to source code">__construct</a>( <span> <var>$newDatabaseInfo</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -146,6 +142,7 @@
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -153,7 +150,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_create">#</a>
-		<code><a href="source-class-cDatabase.html#50-52" title="Go to source code">create</a>( )</code>
+		<code><a href="source-class-cDatabase.html#38-44" title="Go to source code">create</a>( )</code>
 
 		<div class="description short">
 			
@@ -177,6 +174,7 @@
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -184,7 +182,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_update">#</a>
-		<code><a href="source-class-cDatabase.html#54-56" title="Go to source code">update</a>( )</code>
+		<code><a href="source-class-cDatabase.html#46-51" title="Go to source code">update</a>( )</code>
 
 		<div class="description short">
 			
@@ -204,10 +202,71 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="count" id="_count">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_count">#</a>
+		<code><a href="source-class-cDatabase.html#53-58" title="Go to source code">count</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="distinct" id="_distinct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_distinct">#</a>
+		<code><a href="source-class-cDatabase.html#60-66" title="Go to source code">distinct</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="read" id="_read">
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -215,7 +274,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_read">#</a>
-		<code><a href="source-class-cDatabase.html#58-63" title="Go to source code">read</a>( )</code>
+		<code><a href="source-class-cDatabase.html#68-73" title="Go to source code">read</a>( )</code>
 
 		<div class="description short">
 			
@@ -239,6 +298,7 @@
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -246,7 +306,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_delete">#</a>
-		<code><a href="source-class-cDatabase.html#65-67" title="Go to source code">delete</a>( )</code>
+		<code><a href="source-class-cDatabase.html#75-78" title="Go to source code">delete</a>( )</code>
 
 		<div class="description short">
 			
@@ -266,10 +326,131 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="drop" id="_drop">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_drop">#</a>
+		<code><a href="source-class-cDatabase.html#80-83" title="Go to source code">drop</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="aggregate" id="_aggregate">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_aggregate">#</a>
+		<code><a href="source-class-cDatabase.html#85-89" title="Go to source code">aggregate</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="createTable" id="_createTable">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createTable">#</a>
+		<code><a href="source-class-cDatabase.html#91-94" title="Go to source code">createTable</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="createMultiple" id="_createMultiple">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_createMultiple">#</a>
+		<code><a href="source-class-cDatabase.html#96-100" title="Go to source code">createMultiple</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="addOrderBy" id="_addOrderBy">
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -277,7 +458,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addOrderBy">#</a>
-		<code><a href="source-class-cDatabase.html#69-72" title="Go to source code">addOrderBy</a>( <span>mixed <var>$orderby</var></span> )</code>
+		<code><a href="source-class-cDatabase.html#102-105" title="Go to source code">addOrderBy</a>( <span> <var>$orderby</var></span> )</code>
 
 		<div class="description short">
 			
@@ -301,6 +482,7 @@
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -308,7 +490,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addLimit">#</a>
-		<code><a href="source-class-cDatabase.html#74-76" title="Go to source code">addLimit</a>( <span>mixed <var>$limit</var></span> )</code>
+		<code><a href="source-class-cDatabase.html#107-110" title="Go to source code">addLimit</a>( <span> <var>$limit</var></span> )</code>
 
 		<div class="description short">
 			
@@ -332,6 +514,7 @@
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -339,7 +522,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addOffset">#</a>
-		<code><a href="source-class-cDatabase.html#78-80" title="Go to source code">addOffset</a>( <span>mixed <var>$offset</var></span> )</code>
+		<code><a href="source-class-cDatabase.html#112-115" title="Go to source code">addOffset</a>( <span> <var>$offset</var></span> )</code>
 
 		<div class="description short">
 			
@@ -359,10 +542,43 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="addGroupBy" id="_addGroupBy">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addGroupBy">#</a>
+		<code><a href="source-class-cDatabase.html#117-120" title="Go to source code">addGroupBy</a>( <span> <var>$groupby</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+				<h4>Implementation of</h4>
+				<div class="list"><code><a href="class-cModel.html#_addGroupBy">cModel::addGroupBy()</a></code></div>
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="addWhereCondition" id="_addWhereCondition">
 
 		<td class="attributes"><code>
 			 public 
+
 			
 			
 			</code>
@@ -370,7 +586,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addWhereCondition">#</a>
-		<code><a href="source-class-cDatabase.html#82-86" title="Go to source code">addWhereCondition</a>( <span>mixed <var>$condition</var> = <span class="php-keyword1">array</span>()</span> )</code>
+		<code><a href="source-class-cDatabase.html#122-125" title="Go to source code">addWhereCondition</a>( <span> <var>$condition</var> = <span class="php-keyword1">array</span>()</span> )</code>
 
 		<div class="description short">
 			
@@ -403,20 +619,16 @@
 
 
 
-	<table class="summary" id="properties">
+	<table class="summary properties" id="properties">
 	<caption>Properties summary</caption>
 	<tr data-order="dbObj" id="$dbObj">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
 				<a href="source-class-cDatabase.html#17" title="Go to source code"><var>$dbObj</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$dbObj" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -426,20 +638,22 @@
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$dbObj" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="dbType" id="$dbType">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
 				<a href="source-class-cDatabase.html#18" title="Go to source code"><var>$dbType</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$dbType" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -449,20 +663,22 @@
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$dbType" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="table" id="$table">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
 				<a href="source-class-cDatabase.html#19" title="Go to source code"><var>$table</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$table" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -472,20 +688,22 @@
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$table" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
-	<tr data-order="join_condition" id="$join_condition">
+	<tr data-order="condition" id="$condition">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-cDatabase.html#20" title="Go to source code"><var>$join_condition</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$join_condition" class="anchor">#</a>
+				<a href="source-class-cDatabase.html#20" title="Go to source code"><var>$condition</var></a>
 
 			<div class="description short">
 				
@@ -495,20 +713,22 @@
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$condition" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	<tr data-order="column" id="$column">
 		<td class="attributes"><code>
 			public  
-			mixed
+			
 		</code></td>
 
 		<td class="name">
 				<a href="source-class-cDatabase.html#21" title="Go to source code"><var>$column</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$column" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -518,7 +738,13 @@
 				
 
 			</div>
-		</div></td>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$column" class="anchor">#</a>
+				<code></code>
+			</div>
+		</td>
 	</tr>
 	</table>
 
@@ -530,9 +756,11 @@
 </div>
 
 	<div id="footer">
-		mquery API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+		mquery API documentation generated by <a href="http://apigen.org">ApiGen</a>
 	</div>
 </div>
 </div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
 </body>
 </html>
