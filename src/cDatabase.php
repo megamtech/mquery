@@ -123,6 +123,10 @@ Class cDatabase implements cModel {
         $this->dbObj->addWhereCondition($condition);
         return $this;
     }
+    public function getNextSequence($sequence_name){
+        return $this->dbObj->getNextSequence($sequence_name);
+         
+    }
 
 }
 

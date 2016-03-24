@@ -43,6 +43,7 @@ class cMongo {
 
     public function getConnection($newDatabaseInfo) {
         if (!$this->db) {
+            $dbCredencials = '';
             if ($newDatabaseInfo['user'] && $newDatabaseInfo['pass']) {
                 $dbCredencials = $newDatabaseInfo['user'] . ':' . $newDatabaseInfo['pass'] . '@';
             }
@@ -261,7 +262,6 @@ class cMongo {
         $tempcondition = array();
 
         if (is_array($condition)) {
-
             foreach ($condition as $columnname => $values) {
                 if (($columnname != '&ANDARRAY' && $columnname != '&ORARRAY')) {
 
@@ -279,7 +279,10 @@ class cMongo {
                             $tempcondition[$columnname] = $values;
                         }
                     } else {
-
+                        //Converting to mongo id if it is a string
+                        if ($columnname == '_id' && is_object($values) == false) {
+                            $values = $this->changeDataType($columnname, $values);
+                        }
                         $tempcondition[$columnname] = $values;
                     }
                 } else {
@@ -425,11 +428,15 @@ class cMongo {
 
                 $result = (double) $value;
                 break;
+            case '_id':
 
+                $result = new MongoId($value);
+                break;
             default:
                 $result = (string) "$value";
                 break;
         }
+
         return $result;
 
     }
@@ -452,10 +459,11 @@ class cMongo {
 
     }
 
-    private function getNextSequence() {
-        $result = $this->db->__sequences->findAndModify(array("name" => "$this->table"),
+    public function getNextSequence($sequence_name = '') {
+        $sequence_name = ($sequence_name == '') ? $this->table : $sequence_name;
+        $result = $this->db->__sequences->findAndModify(array("name" => "$sequence_name"),
                 array('$inc' => array("seq" => 1)));
-        return $result['seq'];
+        return $result['seq_prefix'] . $result['seq'] . $result['seq_suffix'];
 
     }
 
