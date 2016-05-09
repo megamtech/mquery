@@ -444,7 +444,7 @@ class cMongo {
                 break;
             case '_id':
 
-                $result = new MongoId($value);
+               $result = new \MongoDB\BSON\ObjectID($value);
                 break;
             default:
                 $result = (string) "$value";
