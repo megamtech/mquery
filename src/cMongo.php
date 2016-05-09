@@ -486,7 +486,7 @@ class cMongo {
 
     public function getNextSequence($sequence_name = '') {
         $sequence_name = ($sequence_name == '') ? $this->table : $sequence_name;
-        $result = $this->db->__sequences->findOneAndUpdate(array("name" => "$sequence_name"),
+        $result = (array)$this->db->__sequences->findOneAndUpdate(array("name" => "$sequence_name"),
                 array('$inc' => array("seq" => 1)),
                 array('returnDocument'=>MongoDB\Operation\FindOneAndUpdate::RETURN_DOCUMENT_AFTER));
         return $result['seq_prefix'] . $result['seq'] . $result['seq_suffix'];
