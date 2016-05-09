@@ -17,6 +17,7 @@
  */
 //include AppLoggerModule . 'cMLogger.php';
 
+
 class cMongo {
 
     public $connection;
@@ -47,7 +48,7 @@ class cMongo {
             if ($newDatabaseInfo['user'] && $newDatabaseInfo['pass']) {
                 $dbCredencials = $newDatabaseInfo['user'] . ':' . $newDatabaseInfo['pass'] . '@';
             }
-            $this->connection = new MongoClient('mongodb://' . $dbCredencials . $newDatabaseInfo['host'] . ':' . $newDatabaseInfo['port'] . '/' . $newDatabaseInfo['name']);
+            $this->connection = new MongoDB\Client('mongodb://' . $dbCredencials . $newDatabaseInfo['host'] . ':' . $newDatabaseInfo['port']);
             $this->db = $this->connection->{$newDatabaseInfo['name']};
 //            $this->mLogger = new cMLogger();
         }
@@ -82,12 +83,12 @@ class cMongo {
             if ($seq != '') {
                 $this->column['_id'] = $this->getNextSequence();
             }
-            $this->db->{$this->table}->insert($this->column,
-                    array('fsync' => TRUE));
-            $this->result = $this->column['_id'];
+            $this->replaceMetaFields();
+            $this->result = $this->db->{$this->table}->insertOne($this->column);
+
 //            $this->logger(__FUNCTION__,"debug");
             $this->resetDefaults();
-            return $this->result;
+            return $this->result->getInsertedId();
         } catch (Exception $e) {
 //            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
@@ -99,7 +100,8 @@ class cMongo {
         try {
             //$this->resetDefaults();
 //            $this->logger(__FUNCTION__,"debug");
-            return $this->db->{$this->table}->remove($this->condition);
+            $this->result = $this->db->{$this->table}->deleteMany($this->condition);
+            return $this->result->getDeletedCount();
         } catch (Exception $e) {
 //            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
@@ -109,16 +111,13 @@ class cMongo {
 
     public function aggregate() {
 
-//        print_r($this->column);
-//        exit;
 //        $adminDB = $this->connection->admin; //require admin priviledge
 //
 //        $mongodb_info = $adminDB->command(array('buildinfo' => true));
 //        $mongodb_version = $mongodb_info['version'];
 //
-//        print_r($mongodb_info);
-        $this->cursor = $this->db->{$this->table}->aggregateCursor($this->column,
-                array('allowDiskUse' => true));
+        $this->cursor = $this->db->{$this->table}->aggregateCursor(array('$group' => $this->group_by,
+            '$sort' => $this->order_by, '$limit' => $this->limit));
         foreach ($this->cursor as $doc) {
             $this->result[] = $doc;
         }
@@ -158,25 +157,30 @@ class cMongo {
                         $this->group_by[1], $this->group_by[2], $options);
                 $this->result = $this->cursor['retval'];
             } else {
-                if ($this->column == "") {
-                    $this->column = array();
-                }
-                if (!is_array($this->condition))
+                if (!is_array($this->condition)) {
                     $this->condition = array();
-                $this->cursor = $this->db->{$this->table}->find($this->condition,
-                        $this->column);
+                }
+                if (is_array($this->column)) {
+                    $findOptions['projection'] = $this->column;
+                }
 
                 if ($this->orderby) {
 
-                    $this->cursor = $this->cursor->sort($this->orderby);
+                    $findOptions['sort'] = $this->orderby;
                 }
                 if ($this->limit) {
 
-                    $this->cursor = $this->cursor->limit($this->limit);
+                    $findOptions['limit'] = $this->limit;
                 }
                 if ($this->offset) {
-                    $this->cursor = $this->cursor->skip($this->offset);
+                    $findOptions['skip'] = $this->offset;
                 }
+                if ($this->columns) {
+                    
+                }
+                $this->cursor = $this->db->{$this->table}->find($this->condition,
+                        $findOptions);
+
                 foreach ($this->cursor as $doc) {
                     $this->result[] = $doc;
                 }
@@ -193,11 +197,14 @@ class cMongo {
 
     public function update() {
         try {
-            return $this->db->{$this->table}->update($this->condition,
-                            array('$set' => $this->column),
-                            array('multiple' => true));
+            $this->replaceMetaFields();
+            $this->result = $this->db->{$this->table}->updateMany($this->condition,
+                    array('$set' => $this->column)
+            );
+
 //            $this->logger(__FUNCTION__,"debug");
             $this->resetDefaults();
+            return $this->result->getModifiedCount();
         } catch (Exception $e) {
 //            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
@@ -207,9 +214,16 @@ class cMongo {
 
     public function count() {
         try {
+            if ($this->limit) {
+
+                $findOptions['limit'] = $this->limit;
+            }
+            if ($this->offset) {
+                $findOptions['skip'] = $this->offset;
+            }
 //            $this->logger(__FUNCTION__,"debug");
             return $this->db->{$this->table}->count($this->condition,
-                            $this->limit, $this->offset);
+                            $findOptions);
         } catch (Exception $e) {
 //            $this->logger(__FUNCTION__,"error",$e);
             return $e->getMessage();
@@ -438,6 +452,17 @@ class cMongo {
         }
 
         return $result;
+
+    }
+
+    private function replaceMetaFields() {
+
+        foreach ($this->column as $column_name => $column_value) {
+            if ($column_value == '&current_time&') {
+                $column_value = (microtime(true) * 1000);
+                $this->column[$column_name] = new \MongoDB\BSON\UTCDateTime($column_value);
+            }
+        }
 
     }
 
