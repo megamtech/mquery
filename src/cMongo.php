@@ -177,8 +177,8 @@ class cMongo {
                 if ($this->offset) {
                     $findOptions['skip'] = $this->offset;
                 }
-                if ($this->columns) {
-                    
+                if ($this->column) {
+                    $findOptions['projection']=$this->column;
                 }
                 $findOptions['typeMap'] = array('root' => 'array', 'document' => 'array',
                     'array' => 'array');
