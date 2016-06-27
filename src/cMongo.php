@@ -113,13 +113,50 @@ class cMongo {
 
     public function aggregate() {
 
-//        $adminDB = $this->connection->admin; //require admin priviledge
-//
-//        $mongodb_info = $adminDB->command(array('buildinfo' => true));
-//        $mongodb_version = $mongodb_info['version'];
-//
-        $this->cursor = $this->db->{$this->table}->aggregateCursor(array('$group' => $this->group_by,
-            '$sort' => $this->order_by, '$limit' => $this->limit));
+        if ($this->condition) {
+            $aggregateOptions[]['$match'] = $this->condition;
+        }
+        if ($this->group_by) {
+            $aggregateOptions[]['$group'] = $this->group_by;
+        } else {
+            echo 'Group By cannot be empty';
+            exit;
+        }
+        if ($this->orderby) {
+            $aggregateOptions[]['$sort'] = $this->orderby;
+        }
+        if ($this->limit) {
+            $aggregateOptions[]['$limit'] = $this->limit;
+        }
+        if ($this->offset) {
+            $aggregateOptions[]['$skip'] = $this->offset;
+        }
+        if ($this->column) {
+            $aggregateOptions[]['$project'] = $this->column;
+        } else {
+            //Supress the _id 
+            $project['_id'] = 0;
+//            Check for mutiple group if multiple add nested fields to the outer document
+            if (is_array($this->group_by['_id'])) {
+                foreach ($this->group_by['_id'] as $column_name => $field_name) {
+                    $project[$column_name] = '$_id.' . $column_name;
+                }
+            } else {
+                //Need to Double check for this hack of removing the column name
+                $project[str_replace('$','',$this->group_by['_id'])] = '$_id';
+            }
+            //Setting other than _id to be visible
+            foreach ($this->group_by as $key=>$value){
+                if($key!=='_id'){
+                    $project[$key]=1;
+                }
+            }
+            $aggregateOptions[]['$project']=$project;
+//            echo json_encode($aggregateOptions);exit;
+//            array('_id'=>0,'package_count'=>'$count','warehouse_id'=>'$_id.warehouse_id','warehouse_name'=>'$_id.warehouse_name')
+        }
+        //Match should be the first
+        $this->cursor = $this->db->{$this->table}->aggregate($aggregateOptions);
         foreach ($this->cursor as $doc) {
             $this->result[] = $doc;
         }
@@ -172,13 +209,13 @@ class cMongo {
                 }
                 if ($this->limit) {
 
-                    $findOptions['limit'] = $this->limit;
+                    $findOptions['limit'] = (int) $this->limit;
                 }
                 if ($this->offset) {
                     $findOptions['skip'] = $this->offset;
                 }
                 if ($this->column) {
-                    $findOptions['projection']=$this->column;
+                    $findOptions['projection'] = $this->column;
                 }
                 $findOptions['typeMap'] = array('root' => 'array', 'document' => 'array',
                     'array' => 'array');
@@ -202,7 +239,8 @@ class cMongo {
             return $this->result;
         } catch (Exception $e) {
 //            $this->logger(__FUNCTION__,"error",$e);
-            return $e->getMessage();
+
+            print_r($e->getMessage());
         }
 
     }
@@ -298,7 +336,7 @@ class cMongo {
      */
     public function addWhereCondition($condition) {
         $tempcondition = array();
-        
+
         if (is_array($condition)) {
             foreach ($condition as $columnname => $values) {
                 if (($columnname != '&ANDARRAY' && $columnname != '&ORARRAY')) {
@@ -491,7 +529,9 @@ class cMongo {
     }
 
     public function addLimit($limit) {
-        $this->limit = $limit;
+        if ($limit > 0) {
+            $this->limit = $limit;
+        }
         return $this;
 
     }
