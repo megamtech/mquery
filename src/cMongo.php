@@ -518,9 +518,8 @@ class cMongo {
     }
 
     private function replaceMetaFields() {
-
         foreach ($this->column as $column_name => $column_value) {
-            if ($column_value == '&current_time&') {
+            if ($column_value === '&current_time&') {
                 $column_value = (microtime(true) * 1000);
                 $this->column[$column_name] = new \MongoDB\BSON\UTCDateTime($column_value);
             }
