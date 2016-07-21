@@ -276,6 +276,7 @@ class cMongo {
 
     public function count() {
         try {
+            $findOptions=array();
             if ($this->limit) {
 
                 $findOptions['limit'] = $this->limit;
@@ -557,7 +558,7 @@ class cMongo {
     }
 
     private function resetDefaults() {
-        unset($this->table, $this->condition, $this->column, $this->offset,
+        unset($this->table, $this->condition, $this->column, $this->offset,$this->limit,
                 $this->orderby);
 
     }
