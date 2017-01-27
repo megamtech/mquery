@@ -276,7 +276,6 @@ class cMongo {
 
     public function count() {
         try {
-            $findOptions=array();
             if ($this->limit) {
 
                 $findOptions['limit'] = $this->limit;
@@ -517,7 +516,9 @@ class cMongo {
         return $result;
 
     }
-
+public function toDBDate($column_value){
+	return new \MongoDB\BSON\UTCDateTime($column_value*1000);
+}
     private function replaceMetaFields() {
         foreach ($this->column as $column_name => $column_value) {
             if ($column_value === '&current_time&') {
@@ -558,7 +559,7 @@ class cMongo {
     }
 
     private function resetDefaults() {
-        unset($this->table, $this->condition, $this->column, $this->offset,$this->limit,
+        unset($this->table, $this->condition, $this->column, $this->offset,
                 $this->orderby);
 
     }

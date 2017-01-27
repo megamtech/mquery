@@ -125,5 +125,8 @@ class cNoSql {
          
 
     }
-
+public function toDBDate($time){
+        return $this->dbObj->toDBDate($time);
+         
+    }
 }
