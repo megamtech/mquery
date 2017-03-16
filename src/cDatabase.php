@@ -127,7 +127,7 @@ Class cDatabase implements cModel {
         return $this->dbObj->getNextSequence($sequence_name);
          
     }
-public function toDBDate($time){
+public function toDBDate($time=""){
         return $this->dbObj->toDBDate($time);
          
     }

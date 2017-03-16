@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -199,6 +198,8 @@ class cMongo {
                 if (!is_array($this->condition)) {
                     $this->condition = array();
                 }
+                
+                
                 if (is_array($this->column)) {
                     $findOptions['projection'] = $this->column;
                 }
@@ -214,13 +215,12 @@ class cMongo {
                 if ($this->offset) {
                     $findOptions['skip'] = $this->offset;
                 }
-                if ($this->column) {
-                    $findOptions['projection'] = $this->column;
-                }
+               
                 $findOptions['typeMap'] = array('root' => 'array', 'document' => 'array',
                     'array' => 'array');
                 $this->cursor = $this->db->{$this->table}->find($this->condition,
                         $findOptions);
+                
 
                 foreach ($this->cursor as $doc) {
                     foreach ($doc as $columnName => $columnData) {
@@ -516,7 +516,11 @@ class cMongo {
         return $result;
 
     }
-public function toDBDate($column_value){
+public function toDBDate($column_value=""){
+    if($column_value==""){
+        $column_value=time();
+    }
+        
 	return new \MongoDB\BSON\UTCDateTime($column_value*1000);
 }
     private function replaceMetaFields() {

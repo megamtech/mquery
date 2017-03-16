@@ -216,6 +216,10 @@ class cSql {
         return $this->dbObj->getChildTables($table);
 
     }
+    public function toDBDate($time=""){
+        return $this->dbObj->toDBDate($time);
+         
+    }
 
 }
 
