@@ -150,14 +150,30 @@ class cMongo {
                     $project[$key]=1;
                 }
             }
+            
             $aggregateOptions[]['$project']=$project;
 //            echo json_encode($aggregateOptions);exit;
 //            array('_id'=>0,'package_count'=>'$count','warehouse_id'=>'$_id.warehouse_id','warehouse_name'=>'$_id.warehouse_name')
         }
+       /* print_r($aggregateOptions);
+        echo json_encode($aggregateOptions);
+        exit;*/
         //Match should be the first
         $this->cursor = $this->db->{$this->table}->aggregate($aggregateOptions);
+        $i=0;
         foreach ($this->cursor as $doc) {
-            $this->result[] = $doc;
+            foreach($doc as $key=>$value){
+            if(is_object($value)){
+            if(get_class($value)=='MongoDB\BSON\UTCDateTime'){
+                $this->result[$i][$key] = (int)(string)$value;
+            }
+                
+            }else{
+                $this->result[$i][$key] = $value;
+            }
+            
+            }
+            $i++;
         }
 
 
